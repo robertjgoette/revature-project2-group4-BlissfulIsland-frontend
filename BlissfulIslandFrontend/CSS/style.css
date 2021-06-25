@@ -1,4 +1,75 @@
 body {
   margin: 0;
 }
+
+.navBar {
+  height: 70px;
+  background-color: #3BA4F0;
+  color: white;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  -webkit-transition: height 0.6s ease-out 0s;
+  transition: height 0.6s ease-out 0s;
+}
+
+.navBar--scroll {
+  height: 40px;
+  background-color: #3BA4F0;
+  color: white;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  -webkit-transition: height 0.6s ease-out 0s;
+  transition: height 0.6s ease-out 0s;
+}
+
+.navBar__group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  position: absolute;
+  right: 10px;
+  top: 35px;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  width: auto;
+  -webkit-transition: top 0.6s ease-out 0s;
+  transition: top 0.6s ease-out 0s;
+}
+
+.navBar__group--scroll {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  width: auto;
+  -webkit-transition: top 0.6s ease-out 0s;
+  transition: top 0.6s ease-out 0s;
+}
+
+.navBar__group__links {
+  position: relative;
+  font-size: 18px;
+  top: 50%;
+  height: 20px;
+  margin-left: 20px;
+  padding: 5px;
+}
+
+.navBar__group__links:hover,
+.navBar__group__links:active {
+  color: #F0A73C;
+  cursor: pointer;
+}
 /*# sourceMappingURL=style.css.map */
