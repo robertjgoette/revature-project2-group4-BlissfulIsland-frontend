@@ -62,6 +62,7 @@
         const responseJSON = await response.json();
         const result = await responseJSON;
         
+        // accountID is -999 in the returned JSON if the login credentials are invalid
         if(result.accountID !== -999){
             localStorage.setItem("accountID", result.accountID);
             localStorage.setItem("email", result.email);
