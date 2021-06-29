@@ -5,6 +5,98 @@
     <title>Login</title>
 </head>
 <body>
-    
+
+    <header id="navBar" class="navBar">
+        <div class="navBar__logo">
+            <img src="" alt=""><!--Place holder for logo-->
+            <img src="" alt=""><!--Place holder for handheld/small logo-->
+        </div>
+        <div id="navBarGroup" class="navBar__group"></div>
+    </header>
+
+    <h1>Login</h1>
+    <br />
+    <form>
+        <input type="text" placeholder="Email Address" id="email" autocomplete="off" required />
+        <input type="password" placeholder="Password" id="password" required />
+        <button id="loginButton">Login</button>
+        <p style="color: red;" id="afterLoginMessage"></p>
+    </form>
 </body>
+<script>
+    const loginButton = document.getElementById("loginButton");
+    const afterLoginMessage = document.getElementById("afterLoginMessage");
+
+    loginButton.addEventListener("click",function(e){
+        e.preventDefault();
+        if(email.value !== "" && password.value !== ""){
+            login();
+        }
+        else{
+            afterLoginMessage.innerHTML = "";
+            setTimeout(function(){
+                afterLoginMessage.innerHTML = "Please enter a username and a password";
+            }, 100);
+        }
+    })
+
+    async function login(){
+        afterLoginMessage.innerHTML = "";
+
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+
+        const data = {
+            email: `${email.value}`,
+            password: `${password.value}`
+        };
+
+        const response = await fetch("http://localhost:7000/login",{
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+          body: JSON.stringify(data)
+        });
+
+        const responseJSON = await response.json();
+        const result = await responseJSON;
+        
+        if(result.accountID !== -999){
+            localStorage.setItem("accountID", result.accountID);
+            localStorage.setItem("email", result.email);
+            localStorage.setItem("firstName", result.firstName);
+            localStorage.setItem("lastName", result.lastName);
+            localStorage.setItem("unitID", result.unitID);
+            localStorage.setItem("accountType", result.accountType);
+
+            console.log("Login successful");
+
+            // tenant account
+            if(result.accountType === 0){
+                // redirect to messaging page
+                window.location.href = "messaging.html";
+            }
+
+            // manager account
+            else if(result.accountType === 1){
+                // redirect to the message page
+                window.location.href = "messaging.html";
+            }
+
+            // admin account
+            else if(result.accountType === 2){
+                // redirect to admin home page
+                window.location.href = "admin_portal.html";
+            }
+
+        }
+        else{
+            // the error message is stored in all of the fields that contain strings in the returned JSON,
+            // including firstName
+            afterLoginMessage.innerHTML = result.firstName;
+        }
+    }
+
+</script>
 </html>
