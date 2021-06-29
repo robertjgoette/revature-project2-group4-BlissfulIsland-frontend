@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="CSS/messaging.css">
+    <title>NAVBAR NOT TO STAND ALONE</title>
+</head>
+<body>
+    <header id="navBar" class="navBar">
+        <div class="navBar__logo">
+            <img src="" alt=""><!--Place holder for logo-->
+            <img src="" alt=""><!--Place holder for handheld/small logo-->
+        </div>
+        <div id="navBarGroup" class="navBar__group">
+            <div id="accountMaker" class = "navBar__group__links"><!--JS fill if account is manager--></div>
+            <div id="unitList"class = "navBar__group__links"><!--JS fill if account is manager--></div>
+            <div id="sendMessage"class = "navBar__group__links"><!--JS fill if account account on messaging--></div>
+            <div class = "navBar__group__links">
+                <a id="logOut" onclick="logOut()">Log Out</a>
+            </div>
+        </div>
+    </header>
+    <div class="plusBox">
+        <h3>Recent Messages</h3>
+    </div>
+    <div id="recentMessage" class="tables">
+        <table id="recentMessageTable" class="tables__message">
+            <thead id="recentMessageTableHead"></thead>
+            <tbody id="recentMessageTableBody"></tbody>
+        </table>
+    </div>
+
+    <div class="plusBox" onclick="flipPlus()">
+        <h3>Old Messages</h3>
+        <div class="plus__btn">
+            <span id="oldPlus" class="plus"></span>
+        </div>
+    </div>
+    <div id="oldMessages"class="tables inactive">
+        <table id="oldMessagesTable" class="tables__message">
+            <thead id="oldMessagesTableHead"></thead>
+            <tbody id="oldMessagesTableBody"></tbody>
+        </table>
+    </div>
+
+    
+</body>
+
+<script>
+    const accountType = 1; //Needs to pull from account
+    const accountId = 3; //Needs to pull from account
+    const accountMaker = document.getElementById("accountMaker");
+    const unitList = document.getElementById("unitList");
+    const navBarGroup = document.getElementById("navBarGroup");
+    const navBar = document.getElementById("navBar");
+
+    const sendMessage = document.getElementById("sendMessage");
+    const recentMessageTableHead = document.getElementById("recentMessageTableHead");
+    const oldMessagesTableHead = document.getElementById("oldMessagesTableHead");
+    const recentMessageTableBody = document.getElementById("recentMessageTableBody");
+    const oldMessagesTableBody = document.getElementById("oldMessagesTableBody");
+    const oldMessages = document.getElementById("oldMessages");
+    
+
+    if(accountType === 1){
+        getAllMessage();
+    }else{
+
+    }
+
+    function flipPlus(){
+        oldPlus.classList.toggle("plus--acitve")
+        if (oldMessages.style.maxHeight){
+            oldMessages.style.maxHeight = null;
+        } else {
+            oldMessages.style.maxHeight = oldMessages.scrollHeight + "px";
+        }
+    }
+    async function getAllMessage(){
+        const response = await fetch("http://localhost:7000/messages");
+        let messageTable = await response.json();
+        console.log(messageTable)
+        messageTable.sort(function(x, y) {
+            return parseFloat(y.timeSent) - parseFloat(x.timeSent);
+        });
+        console.log(messageTable)
+        recentMessageTableFill = "";
+        oldMessageTableFill = "";
+        let messageTableHeadFill = "<th>Time Sent</th><th>Who Sent it</th><th>Message</th><th>Respond</th>";
+        i = 0
+        messageTable.map(message => messageSorting(message))
+
+        recentMessageTableHead.innerHTML = messageTableHeadFill;
+        oldMessagesTableHead.innerHTML = messageTableHeadFill;
+        recentMessageTableBody.innerHTML = recentMessageTableFill;
+        oldMessagesTableBody.innerHTML = oldMessageTableFill;
+    }
+
+    async function getAllMessageForTent(){
+        let sendMessageButton = "<a id='sendMessageButton' onclick=sendMessageTent()>Send Message</a>";
+        sendMessage.innerHTML = sendMessageButton;
+
+        let messageTableHeadFill = "<th>Time Sent</th><th>Who Sent it</th><th>Message</th>";
+        recentMessageTableHead.innerHTML = messageTableHeadFill;
+        oldMessages.innerHTML = messageTableHeadFill;
+    }
+
+    async function sendMessageTent(){
+
+    }
+
+    function messageSorting(message){
+        if(i <= 2 ){ 
+            recentMessageTableFill += `<tr> 
+            <td>${unixToDate(message.timeSent)}</td>
+            <td>${message.senderID}</td>
+            <td>${message.messageBody}</td>
+            <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
+            </tr>`
+        } else{
+            oldMessageTableFill += `<tr> 
+            <td>${unixToDate(message.timeSent)}</td>
+            <td>${message.senderID}</td>
+            <td>${message.messageBody}</td>
+            <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
+            </tr>`
+        }
+        i++
+    }
+
+    function respondPopUp(id){
+
+    }
+
+    function unixToDate(timestamp){
+        let fullTime = new Date(timestamp * 1000);
+        let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        let year = fullTime.getFullYear();
+        let month = months[fullTime.getMonth()];
+        let date = fullTime.getDate();
+        let time = date + ' ' + month + ' ' + year;
+        return time;
+    }
+
+</script>
+<script src="JS/index.js"></script>
+
+</html>
