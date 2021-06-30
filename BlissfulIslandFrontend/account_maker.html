@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/account_maker.css">
+</head>
+<body>
+    <!--NAV BAR-->
+    <header id="navBar" class="navBar">
+        <div class="navBar__logo">
+            <img src="" alt=""><!--Place holder for logo-->
+            <img src="" alt=""><!--Place holder for handheld/small logo-->
+        </div>
+        <div id="navBarGroup" class="navBar__group">
+            <div id="accountMaker" class = "navBar__group__links"><!--JS fill if account is manager--></div>
+            <div id="unitList"class = "navBar__group__links"><!--JS fill if account is manager--></div>
+            <div class = "navBar__group__links">
+                <a id="logOut" onclick="logOut()">Log Out</a>
+            </div>
+        </div>
+    </header>
+    
+    <form id="createTenantForm">
+        <h4>Enter new Tenant Information</h4>
+        <div class = "form-group"></div>
+            <label for="firstName">First Name</label>
+            <input type="text" required name="firstName" id="firstName">
+        </div>
+        <div class = "form-group"></div>
+            <label for="lastName">Last Name</label>
+            <input type="text" required name="lastName" id="lastName">
+        </div>
+        <div class = "form-group"></div>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+        </div>
+        <div class = "form-group"></div>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+        </div>
+        <div class = "form-group"></div>
+            <label for="accountType">Account Type</label>
+            <input type="number" min="0" name="accountType" id="accountType" required>
+        </div>
+        <div class = "form-group" id="selectUnit">
+        </div>
+        <button id="createNewAccountBtn">Submit</button>
+        <div class="alertMessage bg-success hidden" id="alertMessage">
+            <p>Message</p>
+        </div>
+    </form>
+    <script src="./JS/account_maker.js"></script>
+</body>
+</html>

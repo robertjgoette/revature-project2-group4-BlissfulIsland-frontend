@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+}
+
+.bg-success {
+  background: #229428;
+  color: #fff;
+}
+
+.bg-fail {
+  background: #bb4c4c;
+  color: #fff;
+}
+
+#createTenantForm {
+  width: 60%;
+  margin: auto;
+  margin-top: 5rem;
+  margin-bottom: 7rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#createTenantForm h4 {
+  text-align: center;
+}
+
+#createTenantForm label {
+  position: relative;
+  top: .25rem;
+}
+
+#createTenantForm input, #createTenantForm select {
+  border-radius: 4px;
+  padding: .3rem 0;
+  outline: none;
+  border: 1px grey solid;
+  margin: .6rem 0;
+}
+
+#createTenantForm #createNewAccountBtn {
+  display: inline-block;
+  margin-top: .5rem;
+  padding: 1rem 0;
+  cursor: pointer;
+  border: 1px grey solid;
+  border-radius: 4px;
+  outline: none;
+  background: #59BAFF;
+}
+
+#createTenantForm .alertMessage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 2rem;
+  border: 1px solid #8d8d8d;
+  border-radius: 4px;
+}
+
+#createTenantForm .hidden {
+  display: none;
+}
+/*# sourceMappingURL=account_maker.css.map */
