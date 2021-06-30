@@ -1,9 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Messaging</title>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="CSS/messaging.css">
+    <title>Home Page</title>
 </head>
-<body id="sampleid">
-    This is a sample messaging page
+<body>
+    <header id="navBar" class="navBar">
+        <div class="navBar__logo">
+            <img src="" alt=""><!--Place holder for logo-->
+            <img src="" alt=""><!--Place holder for handheld/small logo-->
+        </div>
+        <div id="navBarGroup" class="navBar__group">
+            <div id="sendMessage"class = "navBar__group__links"><!--JS fill if account account on messaging--></div>
+            <div id="accountMaker" class = "navBar__group__links"><!--JS fill if account is manager--></div>
+            <div id="unitList"class = "navBar__group__links"><!--JS fill if account is manager--></div>
+            <div class = "navBar__group__links">
+                <a id="logOut" onclick="logOut()">Log Out</a>
+            </div>
+        </div>
+    </header>
+    <div class="plusBox">
+        <h3>Recent Messages</h3>
+    </div>
+    <div id="recentMessage" class="tables">
+        <table id="recentMessageTable" class="tables__message">
+            <thead id="recentMessageTableHead"></thead>
+            <tbody id="recentMessageTableBody"></tbody>
+        </table>
+    </div>
+
+    <div class="plusBox" onclick="flipPlus()">
+        <h3>Old Messages</h3>
+        <div class="plus__btn">
+            <span id="oldPlus" class="plus"></span>
+        </div>
+    </div>
+    <div id="oldMessages"class="tables inactive">
+        <table id="oldMessagesTable" class="tables__message">
+            <thead id="oldMessagesTableHead"></thead>
+            <tbody id="oldMessagesTableBody"></tbody>
+        </table>
+    </div>
+
+    <div id="popUp" class="popUp">
+        <div class="popUp__content">
+            <span onclick="closePopUp()"id = "close" class="popUp__close">X</span>
+            <h3 id="popUpContentHeader"></h3>
+            <label for="messageBody">Message</label><br>
+            <textarea class="messageBox" id="messageText" name="messageBody" maxlength = "200"></textarea><br>
+            <div id ="issue"></div>
+            <div id="messageSumit"></div>
+        </div>
+    </div>
+
 </body>
+
+<script>
+    const accountType = localStorage.getItem("accountType"); //Needs to pull from account
+    const accountId = localStorage.getItem("accountID"); //Needs to pull from account
+    const accountMaker = document.getElementById("accountMaker");
+    const unitList = document.getElementById("unitList");
+    const navBarGroup = document.getElementById("navBarGroup");
+    const navBar = document.getElementById("navBar");
+
+    const sendMessage = document.getElementById("sendMessage");
+    const recentMessageTableHead = document.getElementById("recentMessageTableHead");
+    const oldMessagesTableHead = document.getElementById("oldMessagesTableHead");
+    const recentMessageTableBody = document.getElementById("recentMessageTableBody");
+    const oldMessagesTableBody = document.getElementById("oldMessagesTableBody");
+    const oldMessages = document.getElementById("oldMessages");
+
+    const popUp = document.getElementById("popUp");
+    const close = document.getElementById("close");
+    const popUpContentHeader = document.getElementById("popUpContentHeader");
+    const messageBody = document.getElementById("messageBody");
+    const messageSumit = document.getElementById("messageSumit");
+    const issue = document.getElementById("issue");
+
+    // Start of run on load up
+    if(accountType === 1){
+        getAllMessage();
+    }else{
+        getAllMessageForTent();
+    }
+    // End of run on load up
+
+    // Start of Table interations
+    function flipPlus(){
+        oldPlus.classList.toggle("plus--acitve")
+        if (oldMessages.style.maxHeight){
+            oldMessages.style.maxHeight = null;
+        } else {
+            oldMessages.style.maxHeight = oldMessages.scrollHeight + "px";
+        }
+    }
+    // End of table interation
+
+    // Start of message fetching
+    async function getAllMessage(){
+        const response = await fetch("http://localhost:7000/messages");
+        let messageTable = await response.json();
+        console.log(messageTable)
+        messageTable.sort(function(x, y) {
+            return parseFloat(y.timeSent) - parseFloat(x.timeSent);
+        });
+        console.log(messageTable)
+        recentMessageTableFill = "";
+        oldMessageTableFill = "";
+        let messageTableHeadFill = "<th>Time Sent</th><th>Who Sent it</th><th>Message</th><th>Respond</th>";
+        i = 0
+        messageTable.map(message => messageSorting(message))
+
+        recentMessageTableHead.innerHTML = messageTableHeadFill;
+        oldMessagesTableHead.innerHTML = messageTableHeadFill;
+        recentMessageTableBody.innerHTML = recentMessageTableFill;
+        oldMessagesTableBody.innerHTML = oldMessageTableFill;
+    }
+
+    async function getAllMessageForTent(){
+        let sendMessageButton = "<a id='sendMessageButton' onclick=popUpMessageTent()>Send Message</a>";
+        sendMessage.innerHTML = sendMessageButton;
+
+        let messageTableHeadFill = "<th>Time Sent</th><th>Who Sent it</th><th>Message</th>";
+        recentMessageTableHead.innerHTML = messageTableHeadFill;
+        oldMessagesTableHead.innerHTML = messageTableHeadFill;
+    }
+
+    function messageSorting(message){
+        if(i <= 2 ){ 
+            recentMessageTableFill += `<tr> 
+            <td>${unixToDate(message.timeSent)}</td>
+            <td>${message.senderID}</td>
+            <td>${message.messageBody}</td>
+            <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
+            </tr>`
+        } else{
+            oldMessageTableFill += `<tr> 
+            <td>${unixToDate(message.timeSent)}</td>
+            <td>${message.senderID}</td>
+            <td>${message.messageBody}</td>
+            <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
+            </tr>`
+        }
+        i++
+    }
+
+    function unixToDate(timestamp){
+        let fullTime = new Date(timestamp);
+        let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        let year = fullTime.getFullYear();
+        let month = months[fullTime.getMonth()];
+        let date = fullTime.getDate();
+        let time = date + ' ' + month + ' ' + year;
+        return time;
+    }
+    // End of message fetching
+
+    // Start of message popUp
+    function popUpMessageTent(){
+        popUp.style.display = "block";
+        let popUpContentHeaderFill = `What seems to be the issue?`;
+        let approveButton=`<button id='messageSumit' onclick = sendMessageTent()>Send</button>`;
+        let issues = "<label for='typeOfIssue'>Issue</label><br><select name='typeOfIssue' id='typeOfIssue'><option value='null'>Chose Type</option><option value='0'>Question</option><option value='1'>Utility</option></select>"
+        issue.innerHTML = issues;
+        popUpContentHeader.innerHTML = popUpContentHeaderFill;
+        messageSumit.innerHTML = approveButton;
+    }
+    function respondPopUp(id){
+        popUp.style.display = "block";
+        let popUpContentHeaderFill = `How would you like to respond?`;
+        let approveButton=`<button id='responseSumit' onclick = sendResponse(${id})>Send</button>`;
+        popUpContentHeader.innerHTML = popUpContentHeaderFill;
+        messageSumit.innerHTML = approveButton;
+    }  
+    function closePopUp(){
+        messageText.value ="";
+        popUp.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == popUp) {
+            closePopUp();
+        }
+    }
+    // End of message popUp
+
+    //Start of message sending
+    async function sendMessageTent(){
+        const message = {
+            "senderID":accountId,
+            "receiverID": 12,
+            "messageBody": messageText.value,
+            "timeSent": 0,
+            "messageType": typeOfIssue.value};
+            console.log(message)
+            const typeOfMethod ={
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify(message)
+            };
+            let url = `http://localhost:7000/messages`
+            const putReimbursement = await fetch(url, typeOfMethod);
+            getAllMessageForTent();
+            closePopUp();
+    }
+    async function sendResponse(id){
+        const message = {
+            "senderID":accountId,
+            "receiverID": id,
+            "messageBody": messageText.value,
+            "timeSent": 0,
+            "messageType": 0};
+            const typeOfMethod ={
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify(message)
+            };
+            let url = `http://localhost:7000/messages`
+            const putReimbursement = await fetch(url, typeOfMethod);
+            getAllMessage();
+            closePopUp();
+    }
+    // end of message sending
+    
+
+</script>
+<script src="JS/index.js"></script>
 </html>

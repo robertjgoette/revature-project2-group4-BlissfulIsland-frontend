@@ -18,4 +18,9 @@ window.onscroll = function() {
         navBarGroup.className  = "navBar__group";
     }	
 }
+
+function logOut(){
+    localStorage.setItem("employeeId", 0);
+    window.location.href = "index.html";
+}
 // End of NavBar JS code
