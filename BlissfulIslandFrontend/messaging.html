@@ -79,11 +79,12 @@
     const issue = document.getElementById("issue");
 
     // Start of run on load up
-    if(accountType === 1){
+    if(accountType !== 0){
         getAllMessage();
     }else{
         getAllMessageForTent();
     }
+    
     // End of run on load up
 
     // Start of Table interations

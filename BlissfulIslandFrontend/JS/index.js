@@ -6,8 +6,19 @@ function fillNavBar(){
     let accountMakerButton = "<a id='accountMakerButton' onclick=accountMakerPage()>Account Maker</a>";
     let unitListButton = "<a id='unitListButton' onclick=unitListPage()>Unit List</a>";
 
-    accountMaker.innerHTML = accountMakerButton;
-    unitList.innerHTML = unitListButton;
+    if(accountMaker){
+        accountMaker.innerHTML = accountMakerButton;
+    }
+    if(unitList){
+        unitList.innerHTML = unitListButton;
+    }
+    
+}
+function accountMakerPage(){
+    window.location.href = "account_maker.html";
+}
+function unitListPage(){
+    window.location.href = "unit_list.html";
 }
 window.onscroll = function() {
     if (document.body.scrollTop > 5 || document.documentElement.scrollTop > 5) {
