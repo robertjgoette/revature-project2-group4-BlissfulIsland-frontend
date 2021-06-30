@@ -62,8 +62,7 @@
         const responseJSON = await response.json();
         const result = await responseJSON;
         
-        // accountID is -999 in the returned JSON if the login credentials are invalid
-        if(result.accountID !== -999){
+        if(!result.hasOwnProperty("error")){
             localStorage.setItem("accountID", result.accountID);
             localStorage.setItem("email", result.email);
             localStorage.setItem("firstName", result.firstName);
@@ -93,9 +92,7 @@
 
         }
         else{
-            // the error message is stored in all of the fields that contain strings in the returned JSON,
-            // including firstName
-            afterLoginMessage.innerHTML = result.firstName;
+            afterLoginMessage.innerHTML = result.error;
         }
     }
 
