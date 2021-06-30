@@ -1,0 +1,133 @@
+// Color variables
+$primary-color: #3BA4F0
+$secondary-color: #59BAFF
+$third-color: #1869A3
+$primary-complementary-color: #A38456
+$secondary-complementary-color: #F0A73C
+
+.popUp
+    display: none
+    position: fixed
+    z-index: 1
+    left: 0
+    top: 0
+    width: 100%
+    height: 100%
+    overflow: auto
+    background-color: rgb(0,0,0)
+    background-color: rgba(0,0,0,0.4)
+    @at-root #{&}__content 
+        background-color: #fefefe
+        margin: 15% auto
+        padding: 20px
+        border: 1px solid #888
+        width: 80%
+        @at-root #{&}--small
+            background-color: #fefefe
+            margin: 15% auto
+            padding: 20px
+            border: 1px solid #888
+            width: 40%
+    @at-root #{&}__close 
+        color: #aaa
+        float: right 
+        font-size: 28px
+        font-weight: bold
+
+.messageBox
+    width: 100%
+    height: 100px
+
+.popUp__close:hover,
+.popUp__close:focus 
+    color: black
+    text-decoration: none
+    cursor: pointer
+
+.plusBox
+    width: 80%
+    margin-left: auto
+    margin-right: auto
+    display: flex
+    flex-wrap: wrap
+.plus
+    transform: translate(-50%, -50%) rotate(0)
+    width: 1rem
+    height: 2px
+    -webkit-transition: -webkit-transform .2s ease-out
+    transition: -webkit-transform .2s ease-out
+    transition: transform .2s ease-out
+    transition: transform .2s ease-out, -webkit-transform .2s ease-out
+    display: block
+    background: #000000
+    user-select: none
+    cursor: pointer
+
+.plus::after 
+    transform: translateY(0px) rotate(90deg)
+
+.plus--acitve::after
+    transform: translateY(0px) rotate(0)
+
+.plus::after 
+    content: ""
+    -webkit-transition: -webkit-transform .2s ease-out
+    transition: -webkit-transform .2s ease-out
+    transition: transform .2s ease-out
+    transition: transform .2s ease-out, -webkit-transform .2s ease-out
+    display: block
+    border-radius: 1px
+    background: #000000
+    position: absolute
+    height: 2px
+    width: 100%
+    cursor: pointer
+
+.plus__btn
+    border: none
+    margin-top: 30px
+    margin-left: 15px
+    user-select: none
+    display: block
+
+.inactive
+    max-height: 0
+    transition: max-height 0.5s ease-out
+
+
+.tables
+    width: 80%
+    margin-left: auto
+    margin-right: auto
+    display: flex
+    flex-wrap: wrap
+    overflow: hidden
+    transition: max-height 0.5s ease-out
+    @at-root #{&}__accounts
+        border: 1px solid black
+        margin-left: auto
+        margin-right: auto
+        overflow: hidden
+        transition: max-height 0.5s ease-out
+        @at-root #{&} th
+            background-color: $secondary-color
+            color: white 
+        @at-root #{&} tr:nth-child(even) 
+            background-color: #f2f2f2
+        @at-root #{&} th, td
+            border-spacing: 0px
+            border: 1px solid #ddd
+            padding: 8px
+            text-align: center
+        @at-root #{&} tr:hover
+            background-color: lightgrey
+.delete:hover,
+.delete:focus 
+    color: $primary-complementary-color
+    text-decoration: none
+    cursor: pointer
+.makeManager:hover,
+.makeManager:focus 
+    color: $primary-complementary-color
+    text-decoration: none
+    cursor: pointer
