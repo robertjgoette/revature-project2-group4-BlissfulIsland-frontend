@@ -1,5 +1,5 @@
 // Start of NavBar JS code
-if(accountType === 1){
+if(accountType !== 0){
     fillNavBar()
 }
 function fillNavBar(){

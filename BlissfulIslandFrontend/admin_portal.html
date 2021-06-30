@@ -1,9 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/admin_portal.css" rel="stylesheet"/>
     <title>Admin Portal</title>
 </head>
-<body id="sampleid">
-    This is a sample admin portal page
+<body>
+    <header id="navBar" class="navBar">
+        <div class="navBar__logo">
+            <img src="" alt=""><!--Place holder for logo-->
+            <img src="" alt=""><!--Place holder for handheld/small logo-->
+        </div>
+        <div id="navBarGroup" class="navBar__group">
+            <div id="accountMaker" class = "navBar__group__links"></div>
+            <div class = "navBar__group__links">
+                <a id="logOut" onclick="logOut()">Log Out</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="plusBox" onclick="flipPlus(0)">
+        <h3>Tenant List</h3>
+        <div class="plus__btn">
+            <span id="tentPlus" class="plus"></span>
+        </div>
+    </div>
+    <div id="tenantList"class="tables inactive">
+        <table id="tenantListTable" class="tables__accounts">
+            <thead id="tenantListTableHead"></thead>
+            <tbody id="tenantListTableBody"></tbody>
+        </table>
+    </div>
+    <div class="plusBox" onclick="flipPlus(1)">
+        <h3>Manager List</h3>
+        <div class="plus__btn">
+            <span id="manaPlus" class="plus"></span>
+        </div>
+    </div>
+    <div id="managerList"class="tables inactive">
+        <table id="managerListTable" class="tables__accounts">
+            <thead id="managerListTableHead"></thead>
+            <tbody id="managerListTableBody"></tbody>
+        </table>
+    </div>
+
+
+
+
+    <div id="popUp" class="popUp">
+        <div class="popUp__content--small">
+            <span onclick="closePopUp()" id = "close" class="popUp__close">X</span>
+            <h2>WARNING</h2>
+            <h3 id="popUpContentHeader"></h3>
+            <div id="popUpClose"><button id='popUpClose' onclick = "closePopUp()">Close</button></div>
+            <div id="popUpSumit"></div>
+        </div>
+    </div>
+    
 </body>
+<script>
+    const accountType = 3//localStorage.getItem("accountType"); //Needs to pull from account
+    const accountId = 12//localStorage.getItem("accountID"); //Needs to pull from account
+
+    const accountMaker = document.getElementById("accountMaker");
+    const unitList = document.getElementById("unitList");
+    const navBarGroup = document.getElementById("navBarGroup");
+    const navBar = document.getElementById("navBar");
+
+    const tenantList = document.getElementById("tenantList");
+    const managerList = document.getElementById("managerList");
+    const tenantListTableHead = document.getElementById("tenantListTableHead");
+    const managerListTableHead = document.getElementById("managerListTableHead");
+    const tenantListTableBody = document.getElementById("tenantListTableBody");
+    const managerListTableBody = document.getElementById("managerListTableBody");
+
+    const popUp = document.getElementById("popUp");
+    const close = document.getElementById("close");
+    const popUpContentHeader = document.getElementById("popUpContentHeader");
+    const popUpSumit = document.getElementById("popUpSumit");
+
+    // Start of Run on start up
+    getAllaccounts();
+    // End of Run on start up
+
+
+    // Start of Table hiding
+    function flipPlus(id){
+        if(id === 0){
+            tentPlus.classList.toggle("plus--acitve")
+            if (tenantList.style.maxHeight){
+                tenantList.style.maxHeight = null;
+            } else {
+                tenantList.style.maxHeight = tenantList.scrollHeight + "px";
+            }
+        } else{
+            manaPlus.classList.toggle("plus--acitve")
+            if (managerList.style.maxHeight){
+                managerList.style.maxHeight = null;
+            } else {
+                managerList.style.maxHeight = managerList.scrollHeight + "px";
+            }
+        }
+    }
+    // End of table hiding
+
+    // Start of table filling
+    async function getAllaccounts(){
+        const response1 = await fetch("http://localhost:7000/accounts/tenant");
+        let tenantListTable = await response1.json();
+        const response2 = await fetch("http://localhost:7000/accounts/manager");
+        let managerListTable = await response2.json();
+        tenantListTableFill = "";
+        managerListTableFill = "";
+        tenantListTableHeadFill = "<th>accountID</th><th>Name</th><th>Delete</th><th>Make Manager</th>"
+        managerListTableHeadFill = "<th>accountID</th><th>Name</th><th>Delete</th>"
+        tenantListTable.map(tenant => 
+            tenantListTableFill += `<tr> 
+            <td>${tenant.accountID}</td>
+            <td>${tenant.firstName} ${tenant.lastName}</td>
+            <td><a id="Delete${tenant.accountID}" class="delete" onclick = deleteAccountPopUp(${tenant.accountID})>Delete</a></td>
+            <td><a id="makeManager${tenant.accountID}" class="makeManager" onclick = makeManagerPopUp(${tenant.accountID})>Make Manager</a>
+            </tr>`
+        );
+        managerListTable.map(manager => 
+            managerListTableFill += `<tr> 
+            <td>${manager.accountID}</td>
+            <td>${manager.firstName} ${manager.lastName}</td>
+            <td><a id="Delete${manager.accountID}" class="delete" onclick = deleteAccountPopUp(${manager.accountID})>Delete</a></td>
+            </tr>`
+        )
+        tenantListTableHead.innerHTML = tenantListTableHeadFill;
+        managerListTableHead.innerHTML = managerListTableHeadFill;
+        tenantListTableBody.innerHTML = tenantListTableFill;
+        managerListTableBody.innerHTML = managerListTableFill;
+    }
+    // End of table filling
+
+    // Start of message popUp
+    function deleteAccountPopUp(id){
+        popUp.style.display = "block";
+        let popUpContentHeaderFill = `Are you sure you want to delete account ${id}?`;
+        let approveButton=`<button id='deleteAccount${id}' onclick = deleteAccount(${id})>Delete</button>`;
+
+        popUpContentHeader.innerHTML = popUpContentHeaderFill;
+        popUpSumit.innerHTML = approveButton;
+    }
+    function makeManagerPopUp(id){
+        popUp.style.display = "block";
+        let popUpContentHeaderFill = `Are you sure you want to make account ${id} a Manager?`;
+        let approveButton=`<button id='makeManager${id}' onclick = makeManager(${id})>Make Manager</button>`;
+
+        popUpContentHeader.innerHTML = popUpContentHeaderFill;
+        popUpSumit.innerHTML = approveButton;
+    }  
+    function closePopUp(){
+        popUp.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == popUp) {
+            closePopUp();
+        }
+    }
+
+    async function deleteAccount(id){
+        const typeOfMethod ={
+            method:'DELETE',
+            headers:{'Content-Type':'application/json'}
+        };
+        let url = `http://localhost:7000/accounts/${id}`
+        const putReimbursement = await fetch(url, typeOfMethod);
+        getAllaccounts();
+        closePopUp();
+    }
+
+    async function makeManager(id){
+        const response = await fetch(`http://localhost:7000/accounts/${id}`);
+        let toBeManager = await response.json();
+        const account = {
+            "accountId":toBeManager.accountId,
+            "email":toBeManager.email,
+            "password":toBeManager.password,
+            "firstName":toBeManager.firstName,
+            "lastName":toBeManager.lastName,
+            "unitID":toBeManager.unitID,
+            "accountType":1};
+            const typeOfMethod ={
+                method:'PATCH',
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify(account)
+            };
+            let url = `http://localhost:7000/accounts/${id}`
+            const putReimbursement = await fetch(url, typeOfMethod);
+            getAllaccounts();
+            closePopUp();
+    }
+
+    // End of message popUp
+
+</script>
+<script src="JS/index.js"></script>
 </html>
