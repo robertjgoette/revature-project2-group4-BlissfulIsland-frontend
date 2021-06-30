@@ -1,0 +1,68 @@
+// Color variables
+$primary-color: #3BA4F0
+$secondary-color: #59BAFF
+$third-color: #1869A3
+$primary-complementary-color: #A38456
+$secondary-complementary-color: #F0A73C
+
+$bg-success: #229428
+$bg-failure: #d36464
+
+body
+    margin: 0
+
+.bg-success
+    background: $bg-success
+    color: #fff
+
+.bg-fail
+    background: $bg-failure
+    color: #fff
+
+#createTenantForm
+    width: 60%
+    margin: auto
+    margin-top: 5rem
+    margin-bottom: 7rem 
+    display: flex
+    flex-direction: column   
+
+    h4
+        text-align: center
+
+    label
+        position: relative
+        top: .25rem
+
+    input, select
+        border-radius: 4px
+        padding: .3rem 0
+        outline: none
+        border: 1px grey solid
+        margin: .6rem 0
+
+    #createNewAccountBtn
+        display: inline-block
+        margin-top: .5rem
+        padding: 1rem 0
+        cursor: pointer
+        border: 1px grey solid
+        border-radius: 4px
+        outline: none
+        color: #fff
+        background: $secondary-color
+
+    .alertMessage
+        display: flex
+        align-items: center
+        justify-content: center
+        margin-top: 2rem
+        padding: 1.3rem 0
+        border: 1px solid #8d8d8d
+        border-radius: 4px
+
+    .hidden
+        display: none 
+
+
+    
