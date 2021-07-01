@@ -387,4 +387,45 @@ body {
 #createTenantForm .hidden {
   display: none;
 }
+
+#index {
+  background: url("index_background.jpg") no-repeat fixed center;
+  background-size: cover;
+}
+
+.loginCard {
+  width: 70%;
+  opacity: 0.9;
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: grey;
+  border-radius: 25px;
+  padding: 5%;
+  max-width: 500px;
+  max-height: 300px;
+  color: white;
+}
+
+.loginCard__box {
+  margin-top: 5%;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.loginCard__title {
+  margin-top: 5%;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.loginCard__img {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
 /*# sourceMappingURL=style.css.map */

@@ -2,31 +2,33 @@
 <html lang="en">
 
 <head>
-<<<<<<< Updated upstream
-=======
 	<link rel="icon" type="image/png" href="CSS/Logo-s.png"/>
->>>>>>> Stashed changes
     <link href="CSS/style.css" rel="stylesheet" />
+	<link rel="icon" type="image/png" href="CSS/Logo-s.png"/>
+    <link href="css/style.css" rel="stylesheet" />
     <title>Login</title>
 </head>
 
-<body>
-    <header id="navBar" class="navBar">
+<body id="index">
+    <!-- <header id="navBar" class="navBar">
         <div class="navBar__logo">
-            <img src="" alt=""><!--Place holder for logo-->
-            <img src="" alt=""><!--Place holder for handheld/small logo-->
+            <img src="" alt="">
+            <img src="" alt="">
         </div>
         <div id="navBarGroup" class="navBar__group"></div>
-    </header>
-
-    <h1>Login</h1>
-    <br />
-    <form>
-        <input type="text" placeholder="Email Address" id="email" autocomplete="off" required />
-        <input type="password" placeholder="Password" id="password" required />
-        <button id="loginButton">Login</button>
-        <p style="color: red;" id="afterLoginMessage"></p>
-    </form>
+    </header> -->
+    <div class="loginCard">
+        <div class="loginCard__img">
+            <img class="loginCard__img" src="CSS/Logo-M.png" alt="Logo">
+        </div>
+        <h1 class="loginCard__title">Login</h1>
+        <form class="loginCard__box">
+            <input  type="text" placeholder="Email Address" id="email" autocomplete="off" required />
+            <input  type="password" placeholder="Password" id="password" required />
+            <button  id="loginButton">Login</button>
+            <p style="color: red;" id="afterLoginMessage"></p>
+        </form>
+    </div>
 </body>
 <script>
     const loginButton = document.getElementById("loginButton");
