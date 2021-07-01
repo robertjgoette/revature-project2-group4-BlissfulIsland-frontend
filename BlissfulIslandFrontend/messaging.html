@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <link href="css/style.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="CSS/messaging.css">
     <title>Home Page</title>
 </head>
 <body>
@@ -63,6 +62,7 @@
     const unitList = document.getElementById("unitList");
     const navBarGroup = document.getElementById("navBarGroup");
     const navBar = document.getElementById("navBar");
+    const message = document.getElementById("message");
 
     const sendMessage = document.getElementById("sendMessage");
     const recentMessageTableHead = document.getElementById("recentMessageTableHead");
@@ -79,7 +79,7 @@
     const issue = document.getElementById("issue");
 
     // Start of run on load up
-    if(accountType !== 0){
+    if(accountType == 1){
         getAllMessage();
     }else{
         getAllMessageForTent();
@@ -123,27 +123,42 @@
         let sendMessageButton = "<a id='sendMessageButton' onclick=popUpMessageTent()>Send Message</a>";
         sendMessage.innerHTML = sendMessageButton;
 
+        const response = await fetch("http://localhost:7000/messages");
+        let messageTable = await response.json();
+        messageTable.sort(function(x, y) {
+            return parseFloat(y.timeSent) - parseFloat(x.timeSent);
+        });
+        console.log(messageTable)
+        recentMessageTableFill = "";
+        oldMessageTableFill = "";
+        i = 0
+        messageTable.map(message => messageSorting(message))
+
         let messageTableHeadFill = "<th>Time Sent</th><th>Who Sent it</th><th>Message</th>";
         recentMessageTableHead.innerHTML = messageTableHeadFill;
         oldMessagesTableHead.innerHTML = messageTableHeadFill;
+        recentMessageTableBody.innerHTML = recentMessageTableFill;
+        oldMessagesTableBody.innerHTML = oldMessageTableFill;
     }
 
     function messageSorting(message){
-        if(i <= 2 ){ 
-            recentMessageTableFill += `<tr> 
-            <td>${unixToDate(message.timeSent)}</td>
-            <td>${message.senderID}</td>
-            <td>${message.messageBody}</td>
-            <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
-            </tr>`
-        } else{
-            oldMessageTableFill += `<tr> 
-            <td>${unixToDate(message.timeSent)}</td>
-            <td>${message.senderID}</td>
-            <td>${message.messageBody}</td>
-            <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
-            </tr>`
-        }
+        //if(message.senderID === accountId || accountType === 1){
+            if(i <= 2 ){ 
+                recentMessageTableFill += `<tr> 
+                <td>${unixToDate(message.timeSent)}</td>
+                <td>${message.senderID}</td>
+                <td>${message.messageBody}</td>
+                <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
+                </tr>`
+            } else{
+                oldMessageTableFill += `<tr> 
+                <td>${unixToDate(message.timeSent)}</td>
+                <td>${message.senderID}</td>
+                <td>${message.messageBody}</td>
+                <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
+                </tr>`
+            }
+        //}
         i++
     }
 

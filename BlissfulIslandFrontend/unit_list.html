@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./CSS/style.css">
-    <link rel="stylesheet" href="./CSS/unittype.css">
+    <!-- <link rel="stylesheet" href="./CSS/unittype.css"> -->
 
     <title>Unit List</title>
 </head>
@@ -21,12 +21,8 @@
             <!--Place holder for handheld/small logo-->
         </div>
         <div id="navBarGroup" class="navBar__group">
-            <div id="accountMaker" class="navBar__group__links">
-                <!--JS fill if account is manager-->
-            </div>
-            <div id="unitList" class="navBar__group__links">
-                <!--JS fill if account is manager-->
-            </div>
+            <div id="accountMaker" class="navBar__group__links"></div>
+            <div id="message" class = "navBar__group__links"></div>
             <div class="navBar__group__links">
                 <a id="logOut" onclick="logOut()">Log Out</a>
             </div>
@@ -42,7 +38,7 @@
     </div>
 
     <div id="typeTest" class="tables inactive">
-        <table id="typeTestTable" class="tables_unit_type">
+        <table id="typeTestTable" class="tables__unit_type">
             <thead>
                 <th>Unit Number</th>
                 <th>Available</th>
@@ -59,7 +55,7 @@
     </div>
 
     <div id="typeNormal" class="tables inactive">
-        <table id="typeNormalTable" class="tables_unit_type">
+        <table id="typeNormalTable" class="tables__unit_type">
             <thead>
                 <th>Unit Number</th>
                 <th>Available</th>
@@ -75,7 +71,7 @@
         </div>
     </div>
     <div id="typeDelux" class="tables inactive">
-        <table id="typeDeluxTable" class="tables_unit_type">
+        <table id="typeDeluxTable" class="tables__unit_type">
             <thead>
                 <th>Unit Number</th>
                 <th>Available</th>
@@ -86,13 +82,13 @@
 </body>
 <script>
     getUnitList();
-
-    const accountType = 1; //Needs to pull from account
-    const accountId = 2; //Needs to pull from account
+    const accountType = localStorage.getItem("accountType");
+    const accountId = localStorage.getItem("accountID"); 
     const accountMaker = document.getElementById("accountMaker");
     const unitList = document.getElementById("unitList");
     const navBarGroup = document.getElementById("navBarGroup");
     const navBar = document.getElementById("navBar");
+    const message = document.getElementById("message");
 
 
     const typeTest = document.getElementById("typeTest");

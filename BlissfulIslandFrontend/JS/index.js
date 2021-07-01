@@ -1,6 +1,9 @@
 // Start of NavBar JS code
-if(accountType !== 0){
+if(accountType == 1){
     fillNavBar()
+}
+if(accountType == 2){
+    fillAdminNavBar()
 }
 function fillNavBar(){
     let accountMakerButton = "<a id='accountMakerButton' onclick=accountMakerPage()>Account Maker</a>";
@@ -16,6 +19,13 @@ function fillNavBar(){
     if(message){
         message.innerHTML = messageButtomFill;
     }
+}
+function fillAdminNavBar(){
+    let adminPortalButton = "<a id='adminPortalButton' onclick=adminPortalPage()>Admin Portal</a>";
+
+    if(adminPortal){
+        adminPortal.innerHTML = adminPortalButton;
+    }
     
 }
 function accountMakerPage(){
@@ -25,7 +35,10 @@ function unitListPage(){
     window.location.href = "unit_list.html";
 }
 function messagePage(){
-    window.location.href = "message.html";
+    window.location.href = "messaging.html";
+}
+function adminPortalPage(){
+    window.location.href = "admin_portal.html";
 }
 window.onscroll = function() {
     if (document.body.scrollTop > 5 || document.documentElement.scrollTop > 5) {
