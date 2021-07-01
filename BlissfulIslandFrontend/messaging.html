@@ -105,11 +105,9 @@
     async function getAllMessage(){
         const response = await fetch("http://18.117.185.229:7000/messages");
         let messageTable = await response.json();
-        console.log(messageTable)
         messageTable.sort(function(x, y) {
             return parseFloat(y.timeSent) - parseFloat(x.timeSent);
         });
-        console.log(messageTable)
         recentMessageTableFill = "";
         oldMessageTableFill = "";
         let messageTableHeadFill = "<th>Time Sent</th><th>Who Sent it</th><th>Message</th><th>Respond</th>";
@@ -133,7 +131,6 @@
         messageTable.sort(function(x, y) {
             return parseFloat(y.timeSent) - parseFloat(x.timeSent);
         });
-        console.log(messageTable)
         recentMessageTableFill = "";
         oldMessageTableFill = "";
         i = 0
@@ -229,7 +226,6 @@
             "messageBody": messageText.value,
             "timeSent": 0,
             "messageType": typeOfIssue.value};
-            console.log(message)
             const typeOfMethod ={
                 method:'POST',
                 headers:{'Content-Type':'application/json'},
