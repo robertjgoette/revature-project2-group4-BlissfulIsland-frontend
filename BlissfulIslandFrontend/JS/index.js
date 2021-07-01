@@ -45,12 +45,15 @@ function adminPortalPage(){
     window.location.href = "admin_portal.html";
 }
 window.onscroll = function() {
-    if (document.body.scrollTop > 5 || document.documentElement.scrollTop > 5) {
+    if (document.documentElement.scrollTop > 1) {
         navBar.className = "navBar--scroll";
         navBarGroup.className = "navBar__group--scroll";
+        logoM.className = "navBar__img--scroll";
     } else {
         navBar.className = "navBar"; 
         navBarGroup.className  = "navBar__group";
+        logoM.className = "navBar__img";
+        window.scrollTo(0, 0);
     }	
 }
 

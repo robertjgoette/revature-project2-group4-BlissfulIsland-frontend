@@ -8,8 +8,8 @@
 <body>
     <header id="navBar" class="navBar">
         <div class="navBar__logo">
-            <img src="" alt=""><!--Place holder for logo-->
-            <img src="" alt=""><!--Place holder for handheld/small logo-->
+            <img id="logoM" class="navBar__img" src="CSS/Logo-M.png" alt="Logo">
+            <!-- <img id="logoS" class="hidden" src="CSS/Logo-s.png" alt=""> -->
         </div>
         <div id="navBarGroup" class="navBar__group">
             <div id="sendMessage"class = "navBar__group__links"><!--JS fill if account account on messaging--></div>
@@ -73,6 +73,7 @@
     const oldMessages = document.getElementById("oldMessages");
     const recentMessagesHead = document.getElementById("recentMessagesHead");
     const oldMessagesHead = document.getElementById("oldMessagesHead");
+    const logoM = document.getElementById("logoM");
 
     const popUp = document.getElementById("popUp");
     const close = document.getElementById("close");
