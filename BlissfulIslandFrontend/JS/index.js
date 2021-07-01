@@ -4,13 +4,17 @@ if(accountType !== 0){
 }
 function fillNavBar(){
     let accountMakerButton = "<a id='accountMakerButton' onclick=accountMakerPage()>Account Maker</a>";
-    let unitListButton = "<a id='unitListButton' onclick=unitListPage()>Unit List</a>";
+    let unitListButton = "<a id='unitListButton' onclick='unitListPage()'>Unit List</a>";
+    let messageButtomFill = "<a id='messageButton' onclick=messagePage()>Messages</a>";
 
     if(accountMaker){
         accountMaker.innerHTML = accountMakerButton;
     }
     if(unitList){
         unitList.innerHTML = unitListButton;
+    }
+    if(message){
+        message.innerHTML = messageButtomFill;
     }
     
 }
@@ -19,6 +23,9 @@ function accountMakerPage(){
 }
 function unitListPage(){
     window.location.href = "unit_list.html";
+}
+function messagePage(){
+    window.location.href = "message.html";
 }
 window.onscroll = function() {
     if (document.body.scrollTop > 5 || document.documentElement.scrollTop > 5) {

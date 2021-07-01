@@ -5,14 +5,6 @@ const selectUnit = document.getElementById('selectUnit');
 const alert = document.getElementById('alertMessage');
 const logOutBtn = document.getElementById('logOut');
 
-//variables for account_maker
-const accountType = 1; //Needs to pull from account
-const accountId = 2; //Needs to pull from account
-const accountMaker = document.getElementById("accountMaker");
-const unitList = document.getElementById("unitList");
-const navBarGroup = document.getElementById("navBarGroup");
-const navBar = document.getElementById("navBar");
-
 
 state = {}
 
