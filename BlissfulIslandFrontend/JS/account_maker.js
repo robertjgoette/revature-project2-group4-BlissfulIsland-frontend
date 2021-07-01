@@ -5,12 +5,6 @@ const selectUnit = document.getElementById('selectUnit');
 const alert = document.getElementById('alertMessage');
 const logOutBtn = document.getElementById('logOut');
 
-//variables for account_maker
-const accountType = localStorage.getItem("accountType");
-const accountId = localStorage.getItem("accountID"); 
-const navBarGroup = document.getElementById("navBarGroup");
-const navBar = document.getElementById("navBar");
-
 
 state = {}
 
