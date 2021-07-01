@@ -20,7 +20,7 @@
         </div>
     </header>
     <div class="plusBox">
-        <h3>Recent Messages</h3>
+        <h3 id="recentMessagesHead">Recent Messages</h3>
     </div>
     <div id="recentMessage" class="tables">
         <table id="recentMessageTable" class="tables__message">
@@ -30,7 +30,7 @@
     </div>
 
     <div class="plusBox" onclick="flipPlus()">
-        <h3>Old Messages</h3>
+        <h3 id="oldMessagesHead">Old Messages</h3>
         <div class="plus__btn">
             <span id="oldPlus" class="plus"></span>
         </div>
@@ -70,6 +70,8 @@
     const recentMessageTableBody = document.getElementById("recentMessageTableBody");
     const oldMessagesTableBody = document.getElementById("oldMessagesTableBody");
     const oldMessages = document.getElementById("oldMessages");
+    const recentMessagesHead = document.getElementById("recentMessagesHead");
+    const oldMessagesHead = document.getElementById("oldMessagesHead");
 
     const popUp = document.getElementById("popUp");
     const close = document.getElementById("close");
@@ -122,6 +124,8 @@
     async function getAllMessageForTent(){
         let sendMessageButton = "<a id='sendMessageButton' onclick=popUpMessageTent()>Send Message</a>";
         sendMessage.innerHTML = sendMessageButton;
+        recentMessagesHead.innerHTML = "";
+        oldMessagesHead.innerHTML = "";
 
         const response = await fetch("http://localhost:7000/messages");
         let messageTable = await response.json();
@@ -133,7 +137,8 @@
         oldMessageTableFill = "";
         i = 0
         messageTable.map(message => messageSorting(message))
-
+        const recentMessagesHead = document.getElementById("recentMessagesHead");
+        const oldMessagesHead = document.getElementById("oldMessagesHead");
         let messageTableHeadFill = "<th>Time Sent</th><th>Who Sent it</th><th>Message</th>";
         recentMessageTableHead.innerHTML = messageTableHeadFill;
         oldMessagesTableHead.innerHTML = messageTableHeadFill;
@@ -142,7 +147,7 @@
     }
 
     function messageSorting(message){
-        //if(message.senderID === accountId || accountType === 1){
+        if(accountType == 1){
             if(i <= 2 ){ 
                 recentMessageTableFill += `<tr> 
                 <td>${unixToDate(message.timeSent)}</td>
@@ -158,7 +163,21 @@
                 <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
                 </tr>`
             }
-        //}
+        }else if (message.senderID == accountId || message.receiverID == accountId){
+            if(i <= 2 ){ 
+            recentMessageTableFill += `<tr> 
+                <td>${unixToDate(message.timeSent)}</td>
+                <td>${message.senderID}</td>
+                <td>${message.messageBody}</td>
+                </tr>`
+            } else{
+                oldMessageTableFill += `<tr> 
+                <td>${unixToDate(message.timeSent)}</td>
+                <td>${message.senderID}</td>
+                <td>${message.messageBody}</td>
+                </tr>`
+            }
+        }
         i++
     }
 
