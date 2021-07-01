@@ -2,7 +2,7 @@
 if(accountType == 1){
     fillNavBar()
 }
-if(accountType == 2){
+if(accountType == 2 || accountType == 3){
     fillAdminNavBar()
 }
 function fillNavBar(){
@@ -22,7 +22,11 @@ function fillNavBar(){
 }
 function fillAdminNavBar(){
     let adminPortalButton = "<a id='adminPortalButton' onclick=adminPortalPage()>Admin Portal</a>";
+    let accountMakerButton = "<a id='accountMakerButton' onclick=accountMakerPage()>Account Maker</a>";
 
+    if(accountMaker){
+        accountMaker.innerHTML = accountMakerButton;
+    }
     if(adminPortal){
         adminPortal.innerHTML = adminPortalButton;
     }
