@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="css/style.css" rel="stylesheet"/>
+    <link href="CSS/style.css" rel="stylesheet"/>
     <title>Home Page</title>
 </head>
 <body>
@@ -102,7 +102,7 @@
 
     // Start of message fetching
     async function getAllMessage(){
-        const response = await fetch("http://localhost:7000/messages");
+        const response = await fetch("http://18.117.185.229:7000/messages");
         let messageTable = await response.json();
         console.log(messageTable)
         messageTable.sort(function(x, y) {
@@ -127,7 +127,7 @@
         recentMessagesHead.innerHTML = "";
         oldMessagesHead.innerHTML = "";
 
-        const response = await fetch("http://localhost:7000/messages");
+        const response = await fetch("http://18.117.185.229:7000/messages");
         let messageTable = await response.json();
         messageTable.sort(function(x, y) {
             return parseFloat(y.timeSent) - parseFloat(x.timeSent);
@@ -234,7 +234,7 @@
                 headers:{'Content-Type':'application/json'},
                 body: JSON.stringify(message)
             };
-            let url = `http://localhost:7000/messages`
+            let url = `http://18.117.185.229:7000/messages`
             const putReimbursement = await fetch(url, typeOfMethod);
             getAllMessageForTent();
             closePopUp();
@@ -251,7 +251,7 @@
                 headers:{'Content-Type':'application/json'},
                 body: JSON.stringify(message)
             };
-            let url = `http://localhost:7000/messages`
+            let url = `http://18.117.185.229:7000/messages`
             const putReimbursement = await fetch(url, typeOfMethod);
             getAllMessage();
             closePopUp();

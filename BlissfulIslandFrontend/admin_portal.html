@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="css/style.css" rel="stylesheet"/>
+    <link href="CSS/style.css" rel="stylesheet"/>
     <!-- <link href="css/admin_portal.css" rel="stylesheet"/> -->
     <title>Admin Portal</title>
 </head>
@@ -106,9 +106,9 @@
 
     // Start of table filling
     async function getAllaccounts(){
-        const response1 = await fetch("http://localhost:7000/accounts/tenant");
+        const response1 = await fetch("http://18.117.185.229:7000/accounts/tenant");
         let tenantListTable = await response1.json();
-        const response2 = await fetch("http://localhost:7000/accounts/manager");
+        const response2 = await fetch("http://18.117.185.229:7000/accounts/manager");
         let managerListTable = await response2.json();
         tenantListTableFill = "";
         managerListTableFill = "";
@@ -167,14 +167,14 @@
             method:'DELETE',
             headers:{'Content-Type':'application/json'}
         };
-        let url = `http://localhost:7000/accounts/${id}`
+        let url = `http://18.117.185.229:7000/accounts/${id}`
         const putReimbursement = await fetch(url, typeOfMethod);
         getAllaccounts();
         closePopUp();
     }
 
     async function makeManager(id){
-        const response = await fetch(`http://localhost:7000/accounts/${id}`);
+        const response = await fetch(`http://18.117.185.229:7000/accounts/${id}`);
         let toBeManager = await response.json();
         const account = {
             "accountId":toBeManager.accountId,
@@ -189,7 +189,7 @@
                 headers:{'Content-Type':'application/json'},
                 body: JSON.stringify(account)
             };
-            let url = `http://localhost:7000/accounts/${id}`
+            let url = `http://18.117.185.229:7000/accounts/${id}`
             const putReimbursement = await fetch(url, typeOfMethod);
             getAllaccounts();
             closePopUp();

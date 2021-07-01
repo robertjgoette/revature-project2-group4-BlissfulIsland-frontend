@@ -127,7 +127,7 @@
     }
     //function to get the unit list
     async function getUnitList() {
-        const response = await fetch(`http://127.0.0.1:7000/typesAvailability`);
+        const response = await fetch(`http://18.117.185.229:7000/typesAvailability`);
         if (response.status === 404) {
             return alert("There are no data to retrieve");
         } else {

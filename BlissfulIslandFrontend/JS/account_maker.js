@@ -14,7 +14,7 @@ async function createAccount(){
     const newTenant = Object.fromEntries(data.entries());
     newTenant["accountID"] = "0";
     try{
-        const res = await fetch('http://localhost:7000/accounts', {
+        const res = await fetch('http://18.117.185.229:7000/accounts', {
             method: 'POST',
             headers: {
                'Content-Type': 'text-plain'
@@ -32,7 +32,7 @@ async function createAccount(){
 
 async function getAllUnits(){
     try{
-        const res = await fetch('http://localhost:7000/units');
+        const res = await fetch('http://18.117.185.229:7000/units');
         if(res.ok){
         state.units = await res.json();
         renderSelectUnitFormField();
