@@ -4,7 +4,7 @@ const createTenantForm = document.getElementById('createTenantForm');
 const selectUnit = document.getElementById('selectUnit');
 const alert = document.getElementById('alertMessage');
 const logOutBtn = document.getElementById('logOut');
-const accountTypeField = document.getElementById('accountType')
+const accountTypeField = document.getElementById('accountType-group')
 
 
 state = {}

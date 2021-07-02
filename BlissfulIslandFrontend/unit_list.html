@@ -3,10 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" size="192x192" href="CSS/Logo-s.png"/>
-	<link rel="icon" type="image/png" size="32x32" href="CSS/Logo-s.png"/>
-	<link rel="icon" type="image/png" size="96x96" href="CSS/Logo-s.png"/>
-	<link rel="icon" type="image/png" size="16x16" href="CSS/Logo-s.png"/>
+    <link rel="icon" type="image/png" href="CSS/Logo-s.png"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./CSS/style.css">
     <title>Unit List</title>
@@ -16,8 +13,7 @@
     <!--start of  navbar-->
     <header id="navBar" class="navBar">
         <div class="navBar__logo">
-            <img src="" alt="">
-            <!--Place holder for logo-->
+            <img id="logoM" class="navBar__img" src="CSS/Logo-M.png" alt="Logo">
             <img src="" alt="">
             <!--Place holder for handheld/small logo-->
         </div>
@@ -90,6 +86,7 @@
     const navBarGroup = document.getElementById("navBarGroup");
     const navBar = document.getElementById("navBar");
     const message = document.getElementById("message");
+    const logoM = document.getElementById("logoM");
 
 
     const typeTest = document.getElementById("typeTest");
