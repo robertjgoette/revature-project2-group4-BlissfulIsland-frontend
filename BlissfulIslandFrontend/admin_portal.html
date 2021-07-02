@@ -119,7 +119,7 @@
             <td>${tenant.accountID}</td>
             <td>${tenant.firstName} ${tenant.lastName}</td>
             <td><a id="Delete${tenant.accountID}" class="delete" onclick = deleteAccountPopUp(${tenant.accountID})>Delete</a></td>
-            <td><a id="makeManager${tenant.accountID}" class="makeManager" onclick = makeManagerPopUp(${tenant.accountID})>Make Manager</a>
+            <td><a id="Manager${tenant.accountID}" class="makeManager" onclick = makeManagerPopUp(${tenant.accountID})>Make Manager</a>
             </tr>`
         );
         managerListTable.map(manager => 
