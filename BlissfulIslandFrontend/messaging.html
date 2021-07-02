@@ -58,6 +58,28 @@
 </body>
 
 <script>
+    let namesAreSet = false;
+
+    async function setNames(){
+        const response = await fetch("http://localhost:7000/accounts");
+        const responseJSON = await response.json();
+        for(let i = 0; i < responseJSON.length; i++){
+            element = responseJSON[i];
+            console.log(element);
+            let name = element.firstName + " " + element.lastName;
+            nameCache.set(parseInt(element.accountID), name);
+            console.log("Name for ID of " + parseInt(element.accountID) + " is " + name);
+            console.log(nameCache);
+        }
+        namesAreSet = true;
+    }
+
+    async function settingNames(){
+        await setNames();
+    }
+
+    settingNames();
+
     const accountType = localStorage.getItem("accountType");
     const accountId = localStorage.getItem("accountID"); 
     const accountMaker = document.getElementById("accountMaker");
@@ -83,10 +105,14 @@
     const messageSubmit = document.getElementById("messageSubmit");
     const issue = document.getElementById("issue");
 
+    const nameCache = new Map();
+    
+
     // Start of run on load up
     if(accountType == 1){
         getAllMessage();
     }else{
+        console.log("About to get all tenant messages");
         getAllMessageForTent();
     }
     
@@ -120,6 +146,8 @@
         oldMessagesTableHead.innerHTML = messageTableHeadFill;
         recentMessageTableBody.innerHTML = recentMessageTableFill;
         oldMessagesTableBody.innerHTML = oldMessageTableFill;
+
+        names();
     }
 
     async function getAllMessageForTent(){
@@ -142,36 +170,60 @@
         oldMessagesTableHead.innerHTML = messageTableHeadFill;
         recentMessageTableBody.innerHTML = recentMessageTableFill;
         oldMessagesTableBody.innerHTML = oldMessageTableFill;
+
+        names();
+    }
+
+    async function names(){
+        for(let x = 0; x < i; x++){
+            const name = document.getElementById(`name${x}`);
+            console.log("The current inner HTML is " + name.innerHTML);
+            if(name !== null){
+                let id = name.innerHTML;
+                name.innerHTML = await getName(parseInt(id));
+            }
+        }
     }
 
     function messageSorting(message){
+        console.log("About to start sorting");
+        console.log("Sent from ID of " + message.senderID);
+        console.log("Sent to ID of " + message.receiverID);
+        console.log("AccountID is " + accountId);
+        console.log("Account type is " + accountType)
         if(accountType == 1){
             if(i <= 2 ){ 
                 recentMessageTableFill += `<tr> 
                 <td>${unixToDate(message.timeSent)}</td>
-                <td>${message.senderID}</td>
+                <!-- <td>${message.senderID}</td> -->
+                <td id="name${i}">${message.senderID}</td>
                 <td>${message.messageBody}</td>
                 <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
                 </tr>`
             } else{
                 oldMessageTableFill += `<tr> 
                 <td>${unixToDate(message.timeSent)}</td>
-                <td>${message.senderID}</td>
+                <!-- <td>${message.senderID}</td> -->
+                <td id="name${i}">${message.senderID}</td>
                 <td>${message.messageBody}</td>
                 <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
                 </tr>`
             }
-        }else if (message.senderID == accountId || message.receiverID == accountId){
+            console.log("I just assigned ID " + message.senderID + " and name " + getName(parseInt(message.senderID)));
+        }
+        else if (message.senderID == accountId || message.receiverID == accountId){
             if(i <= 2 ){ 
             recentMessageTableFill += `<tr> 
                 <td>${unixToDate(message.timeSent)}</td>
-                <td>${message.senderID}</td>
+                <!-- <td>${message.senderID}</td> -->
+                <td id="name${i}">${message.senderID}</td>
                 <td>${message.messageBody}</td>
                 </tr>`
             } else{
                 oldMessageTableFill += `<tr> 
                 <td>${unixToDate(message.timeSent)}</td>
-                <td>${message.senderID}</td>
+                <!-- <td>${message.senderID}</td> -->
+                <td id="name${i}">${message.senderID}</td>
                 <td>${message.messageBody}</td>
                 </tr>`
             }
@@ -187,6 +239,15 @@
         let date = fullTime.getDate();
         let time = date + ' ' + month + ' ' + year;
         return time;
+    }
+
+    async function getName(id){
+        if(namesAreSet === false){
+            console.log("Waiting to find the name of ID " + id);
+            await new Promise(r => setTimeout(r, 50));
+        }
+        console.log("Done waiting, name is " + nameCache.get(id))
+        return nameCache.get(id);
     }
     // End of message fetching
 
@@ -248,15 +309,15 @@
             "messageBody": messageText.value,
             "timeSent": 0,
             "messageType": 0};
-            const typeOfMethod ={
-                method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body: JSON.stringify(message)
-            };
-            let url = `http://localhost:7000/messages`
-            const putReimbursement = await fetch(url, typeOfMethod);
-            getAllMessage();
-            closePopUp();
+        const typeOfMethod ={
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify(message)
+        };
+        let url = `http://localhost:7000/messages`
+        const putReimbursement = await fetch(url, typeOfMethod);
+        getAllMessage();
+        closePopUp();
     }
     // end of message sending
     
