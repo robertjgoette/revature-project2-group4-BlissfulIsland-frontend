@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://use.typekit.net/jyg2wba.css">
     <link href="css/style.css" rel="stylesheet"/>
     <link rel="icon" type="image/png" href="CSS/Logo-s.png"/>
     <title>Admin Portal</title>
@@ -141,7 +142,7 @@
     function deleteAccountPopUp(id){
         popUp.style.display = "block";
         let popUpContentHeaderFill = `Are you sure you want to delete account ${id}?`;
-        let approveButton=`<button id='deleteAccount${id}' onclick = deleteAccount(${id})>Delete</button>`;
+        let approveButton=`<button id='deleteAccount' onclick = deleteAccount(${id})>Delete</button>`;
 
         popUpContentHeader.innerHTML = popUpContentHeaderFill;
         popUpSumit.innerHTML = approveButton;
@@ -149,7 +150,7 @@
     function makeManagerPopUp(id){
         popUp.style.display = "block";
         let popUpContentHeaderFill = `Are you sure you want to make account ${id} a Manager?`;
-        let approveButton=`<button id='makeManager${id}' onclick = makeManager(${id})>Make Manager</button>`;
+        let approveButton=`<button id='makeManager' onclick = makeManager(${id})>Make Manager</button>`;
 
         popUpContentHeader.innerHTML = popUpContentHeaderFill;
         popUpSumit.innerHTML = approveButton;
