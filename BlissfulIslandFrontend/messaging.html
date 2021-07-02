@@ -50,7 +50,7 @@
             <label for="messageBody">Message</label><br>
             <textarea class="messageBox" id="messageText" name="messageBody" maxlength = "200"></textarea><br>
             <div id ="issue"></div>
-            <div id="messageSumit"></div>
+            <div id="messageSubmit"></div>
         </div>
     </div>
 
@@ -79,7 +79,7 @@
     const close = document.getElementById("close");
     const popUpContentHeader = document.getElementById("popUpContentHeader");
     const messageBody = document.getElementById("messageBody");
-    const messageSumit = document.getElementById("messageSumit");
+    const messageSubmit = document.getElementById("messageSubmit");
     const issue = document.getElementById("issue");
 
     // Start of run on load up
@@ -106,11 +106,9 @@
     async function getAllMessage(){
         const response = await fetch("http://localhost:7000/messages");
         let messageTable = await response.json();
-        console.log(messageTable)
         messageTable.sort(function(x, y) {
             return parseFloat(y.timeSent) - parseFloat(x.timeSent);
         });
-        console.log(messageTable)
         recentMessageTableFill = "";
         oldMessageTableFill = "";
         let messageTableHeadFill = "<th>Time Sent</th><th>Who Sent it</th><th>Message</th><th>Respond</th>";
@@ -132,7 +130,6 @@
         messageTable.sort(function(x, y) {
             return parseFloat(y.timeSent) - parseFloat(x.timeSent);
         });
-        console.log(messageTable)
         recentMessageTableFill = "";
         oldMessageTableFill = "";
         i = 0
@@ -196,18 +193,18 @@
     function popUpMessageTent(){
         popUp.style.display = "block";
         let popUpContentHeaderFill = `What seems to be the issue?`;
-        let approveButton=`<button id='messageSumit' onclick = sendMessageTent()>Send</button>`;
-        let issues = "<label for='typeOfIssue'>Issue</label><br><select name='typeOfIssue' id='typeOfIssue'><option value='null'>Chose Type</option><option value='0'>Question</option><option value='1'>Utility</option></select>"
+        let approveButton=`<button id='messageSubmit' onclick = sendMessageTent()>Send</button>`;
+        let issues = "<label for='typeOfIssue'>Issue</label><br><select name='typeOfIssue' id='typeOfIssue'><option value='null' disabled selected>Choose Type</option><option value='0'>Question</option><option value='1'>Utility</option></select>"
         issue.innerHTML = issues;
         popUpContentHeader.innerHTML = popUpContentHeaderFill;
-        messageSumit.innerHTML = approveButton;
+        messageSubmit.innerHTML = approveButton;
     }
     function respondPopUp(id){
         popUp.style.display = "block";
         let popUpContentHeaderFill = `How would you like to respond?`;
-        let approveButton=`<button id='responseSumit' onclick = sendResponse(${id})>Send</button>`;
+        let approveButton=`<button id='responseSubmit' onclick = sendResponse(${id})>Send</button>`;
         popUpContentHeader.innerHTML = popUpContentHeaderFill;
-        messageSumit.innerHTML = approveButton;
+        messageSubmit.innerHTML = approveButton;
     }  
     function closePopUp(){
         messageText.value ="";
@@ -222,22 +219,26 @@
 
     //Start of message sending
     async function sendMessageTent(){
-        const message = {
-            "senderID":accountId,
-            "receiverID": 12,
-            "messageBody": messageText.value,
-            "timeSent": 0,
-            "messageType": typeOfIssue.value};
-            console.log(message)
-            const typeOfMethod ={
-                method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body: JSON.stringify(message)
-            };
-            let url = `http://localhost:7000/messages`
-            const putReimbursement = await fetch(url, typeOfMethod);
-            getAllMessageForTent();
-            closePopUp();
+        if(typeOfIssue.value === "null"){
+            alert("Please select a type for your message")
+        }
+        else{
+            const message = {
+                "senderID":accountId,
+                "receiverID": 12,
+                "messageBody": messageText.value,
+                "timeSent": 0,
+                "messageType": typeOfIssue.value};
+                const typeOfMethod ={
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body: JSON.stringify(message)
+                };
+                let url = `http://localhost:7000/messages`
+                const putReimbursement = await fetch(url, typeOfMethod);
+                getAllMessageForTent();
+                closePopUp();
+            }
     }
     async function sendResponse(id){
         const message = {
