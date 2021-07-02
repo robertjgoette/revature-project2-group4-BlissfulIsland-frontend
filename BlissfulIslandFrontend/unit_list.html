@@ -28,7 +28,7 @@
 
     <!--table type test-->
     <div>
-        <div class="plusBox" onclick="flipPlus()">
+        <div class="plusBox" id= "plusBtn1" onclick="flipPlus()">
             <h3>Type Test</h3>
             <div class="plus__btn">
                 <span id="oldPlus" class="plus"></span>
@@ -46,7 +46,7 @@
         </div>
     </div>
     <!-- table type normal-->
-    <div class="plusBox" onclick="flipPlusN()">
+    <div class="plusBox" id= "plusBtn2" onclick="flipPlusN()">
         <h3>Type Normal</h3>
         <div class="plus__btn">
             <span id="normalPlus" class="plus"></span>
@@ -64,7 +64,7 @@
     </div>
 
     <!--table type delux-->
-    <div class="plusBox" onclick="flipPlusD()">
+    <div class="plusBox" id= "plusBtn3" onclick="flipPlusD()">
         <h3>Type Delux</h3>
         <div class="plus__btn">
             <span id="deluxPlus" class="plus"></span>
@@ -134,7 +134,6 @@
             return alert("There is no data to retrieve");
         } else {
             const records = await response.json();
-            console.log(records)
             let tableRow = "";
             for (let record of records) {
                 if (record.typeId == 1) {
