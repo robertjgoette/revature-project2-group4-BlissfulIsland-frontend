@@ -126,8 +126,6 @@
     async function getAllMessageForTent(){
         let sendMessageButton = "<a id='sendMessageButton' onclick=popUpMessageTent()>Send Message</a>";
         sendMessage.innerHTML = sendMessageButton;
-        recentMessagesHead.innerHTML = "";
-        oldMessagesHead.innerHTML = "";
 
         const response = await fetch("http://localhost:7000/messages");
         let messageTable = await response.json();

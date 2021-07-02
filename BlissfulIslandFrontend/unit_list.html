@@ -25,24 +25,26 @@
     </header>
     <!--end of nav bar-->
 
+
     <!--table type test-->
-    <div class="plusBox" onclick="flipPlus()">
-        <h3>Type Test</h3>
-        <div class="plus__btn">
-            <span id="oldPlus" class="plus"></span>
+    <div>
+        <div class="plusBox" onclick="flipPlus()">
+            <h3>Type Test</h3>
+            <div class="plus__btn">
+                <span id="oldPlus" class="plus"></span>
+            </div>
+        </div>
+
+        <div id="typeTest" class="tables inactive">
+            <table id="typeTestTable" class="tables__unit_type">
+                <thead>
+                    <th>Unit Number</th>
+                    <th>Available</th>
+                </thead>
+                <tbody id="requestUnitList"></tbody>
+            </table>
         </div>
     </div>
-
-    <div id="typeTest" class="tables inactive">
-        <table id="typeTestTable" class="tables__unit_type">
-            <thead>
-                <th>Unit Number</th>
-                <th>Available</th>
-            </thead>
-            <tbody id="requestUnitList"></tbody>
-        </table>
-    </div>
-
     <!-- table type normal-->
     <div class="plusBox" onclick="flipPlusN()">
         <h3>Type Normal</h3>
