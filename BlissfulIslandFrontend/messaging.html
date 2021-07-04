@@ -242,7 +242,7 @@
     function popUpMessageTent(){
         popUp.style.display = "block";
         let popUpContentHeaderFill = `What seems to be the issue?`;
-        let approveButton=`<button id='messageSubmit' onclick = sendMessageTent()>Send</button>`;
+        let approveButton=`<button id='messageSubmit' class='tenantSubmitBtn' onclick = sendMessageTent()>Send</button>`;
         let issues = "<label for='typeOfIssue'>Issue</label><br><select name='typeOfIssue' id='typeOfIssue'><option value='null' disabled selected>Choose Type</option><option value='0'>Question</option><option value='1'>Utility</option></select>"
         issue.innerHTML = issues;
         popUpContentHeader.innerHTML = popUpContentHeaderFill;
@@ -268,7 +268,10 @@
 
     //Start of message sending
     async function sendMessageTent(){
+        const btn = document.querySelector(".tenantSubmitBtn");
+        btn.disabled = true;
         if(typeOfIssue.value === "null"){
+            btn.disabled = false;
             alert("Please select a type for your message")
         }
         else{
@@ -291,6 +294,8 @@
             }
     }
     async function sendResponse(id){
+        const btn = document.getElementById("responseSubmit");
+        btn.disabled = true;
         const message = {
             "senderID":accountId,
             "receiverID": id,
