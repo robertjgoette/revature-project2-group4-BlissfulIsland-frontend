@@ -283,6 +283,7 @@
                     headers:{'Content-Type':'application/json'},
                     body: JSON.stringify(message)
                 };
+                messageText.value ="";
                 let url = `http://localhost:7000/messages`
                 const putReimbursement = await fetch(url, typeOfMethod);
                 getAllMessageForTent();
@@ -301,6 +302,7 @@
             headers:{'Content-Type':'application/json'},
             body: JSON.stringify(message)
         };
+        messageText.value ="";
         let url = `http://localhost:7000/messages`
         const putReimbursement = await fetch(url, typeOfMethod);
         getAllMessage();
