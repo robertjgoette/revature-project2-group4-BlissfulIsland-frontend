@@ -126,7 +126,7 @@ createTenantForm.addEventListener('submit', async (e) => {
 
     //disable submit button
     createAccountBtn.disabled = true;
-
+    
     //if fetch is not yet completed... do nothing
     if(!state || !state.units){
         return;
