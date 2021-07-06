@@ -61,7 +61,7 @@
     let namesAreSet = false;
 
     async function setNames(){
-        const response = await fetch("http://localhost:7000/accounts");
+        const response = await fetch("http://18.117.185.229:7000/accounts");
         const responseJSON = await response.json();
         for(let i = 0; i < responseJSON.length; i++){
             element = responseJSON[i];
@@ -287,7 +287,7 @@
                     body: JSON.stringify(message)
                 };
                 messageText.value ="";
-                let url = `http://localhost:7000/messages`
+                let url = `http://18.117.185.229:7000/messages`
                 const putReimbursement = await fetch(url, typeOfMethod);
                 getAllMessageForTent();
                 closePopUp();
@@ -308,7 +308,7 @@
             body: JSON.stringify(message)
         };
         messageText.value ="";
-        let url = `http://localhost:7000/messages`
+        let url = `http://18.117.185.229:7000/messages`
         const putReimbursement = await fetch(url, typeOfMethod);
         getAllMessage();
         closePopUp();
