@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="CSS/style.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.typekit.net/jyg2wba.css">
-    <link href="css/style.css" rel="stylesheet"/>
     <link rel="icon" type="image/png" href="CSS/Logo-s.png"/>
     <title>Home Page</title>
 </head>
@@ -127,7 +127,7 @@
 
     // Start of message fetching
     async function getAllMessage(){
-        const response = await fetch("http://localhost:7000/messages");
+        const response = await fetch("http://18.117.185.229:7000/messages");
         let messageTable = await response.json();
         messageTable.sort(function(x, y) {
             return parseFloat(y.timeSent) - parseFloat(x.timeSent);
@@ -150,7 +150,7 @@
         let sendMessageButton = "<a id='sendMessageButton' onclick=popUpMessageTent()>Send Message</a>";
         sendMessage.innerHTML = sendMessageButton;
 
-        const response = await fetch("http://localhost:7000/messages");
+        const response = await fetch("http://18.117.185.229:7000/messages");
         let messageTable = await response.json();
         messageTable.sort(function(x, y) {
             return parseFloat(y.timeSent) - parseFloat(x.timeSent);
