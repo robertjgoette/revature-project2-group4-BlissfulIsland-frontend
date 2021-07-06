@@ -297,39 +297,6 @@
         let chart2 = new Chart(
             document.getElementById('chart3'), config1);
     }
-    /*Application state and redirects*/
-fetchLocalStorage();
-function fetchLocalStorage(){
-    let user = {};
-    user.email = window.localStorage["email"];
-    user.firstName = window.localStorage["firstName"];
-    user.accountType = window.localStorage["accountType"];
-    state.user = user;
-}
-
-function securePage(){
-    if(!state.user){
-        redirectIndex();
-        return;
-    }
-    if(state.user.accountType >= 1){
-        return;
-    }
-    redirectMessaging();
-}
-
-function logOut(){
-    localStorage.clear();
-    redirectIndex();
-}
-
-function redirectIndex(){
-    location.href = "./index.html";
-}
-
-function redirectMessaging(){
-    location.href = "./messaging.html";
-}
 
 </script>
 <script src="JS/index.js"></script>
