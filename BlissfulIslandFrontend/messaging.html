@@ -188,7 +188,7 @@
                 <!-- <td>${message.senderID}</td> -->
                 <td id="name${i}">${message.senderID}</td>
                 <td>${message.messageBody}</td>
-                <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
+                <td><a id="respond${message.messageID}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
                 </tr>`
             } else{
                 oldMessageTableFill += `<tr> 
@@ -196,7 +196,7 @@
                 <!-- <td>${message.senderID}</td> -->
                 <td id="name${i}">${message.senderID}</td>
                 <td>${message.messageBody}</td>
-                <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
+                <td><a id="respond${message.messageID}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
                 </tr>`
             }
         }
