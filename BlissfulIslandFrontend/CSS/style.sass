@@ -10,17 +10,30 @@ $bg-failure: #d36464
 
 body
     margin: 0
+    font-family: lithos-pro, sans-serif
+    font-weight: 400
+    font-style: normal
 
 //Start of NavBar CSS
 .navBar
-    height: 70px
+    height: 100px
     background-color: $primary-color
     color: white
     position: sticky
     top: 0
     transition: height 0.6s ease-out 0s
+    @at-root #{&}__img
+        padding-top: 5px
+        padding-left: 5px
+        height: 85px
+        transition: height 0.6s ease-out 0s
+        @at-root #{&}--scroll
+            padding-top: 5px
+            padding-left: 5px
+            height: 60px
+            transition: height 0.6s ease-out 0s
     @at-root #{&}--scroll
-        height: 40px
+        height: 70px
         background-color: $primary-color
         color: white
         position: sticky
@@ -32,7 +45,7 @@ body
         flex-wrap: wrap
         position: absolute
         right: 10px
-        top: 35px
+        top: 65px
         justify-content: flex-end
         width: auto
         transition: top 0.6s ease-out 0s
@@ -41,7 +54,7 @@ body
             flex-wrap: wrap
             position: absolute
             right: 10px
-            top: 5px
+            top: 35px
             justify-content: flex-end
             width: auto
             transition: top 0.6s ease-out 0s
@@ -68,6 +81,10 @@ body
     flex-wrap: wrap
     overflow: hidden
     transition: height 2s ease-out
+    @at-root #{&}--fill
+        width: 100%
+    @at-root #{&}__unit_type
+        width: 60%
     @at-root #{&}__message
         border: 1px solid black
         margin-left: auto
@@ -195,7 +212,8 @@ body
     background: #000000
     user-select: none
     cursor: pointer
-    
+    @at-root #{&}--white
+        background: white
 .plus::after 
     transform: translateY(0px) rotate(90deg)
 
@@ -215,7 +233,9 @@ body
     height: 2px
     width: 100%
     cursor: pointer
-
+.plus--white::after 
+    background: white
+    
 .plus__btn
     border: none
     margin-top: 30px
@@ -276,7 +296,8 @@ body
         border-radius: 4px
     .hidden
         display: none 
-
+.hidden
+        display: none 
 // Index style starts
 #index
     background: url("index_background.jpg") no-repeat fixed center
@@ -310,3 +331,52 @@ body
         margin-left: auto
         margin-right: auto
 //Index style ends
+
+
+//unit_list Style starts
+.unitCard  
+    margin-top: 3rem
+    width: 60%
+    border: solid 1px black
+    margin-left: auto
+    margin-right: auto
+    background-color: $secondary-color
+    display: flex
+    flex-wrap: wrap
+    position: relative
+    @at-root #{&}__pieChart
+        width: 45%
+    @at-root #{&}__attribute
+        margin-top: 3rem
+        font-size: 1.55rem
+        margin-right: auto
+        margin-top: auto
+        margin-bottom: auto
+        color: white
+        ul
+            padding-inline-start: 20px
+            li
+                list-style-type: none
+                padding-top: 5px 
+    @at-root #{&}__typeName
+        color: white
+        position: absolute
+        right: 40px
+    @at-root #{&}__plusBox
+        color: white
+        position: absolute
+        right: 40px
+        bottom: 10px
+        @at-root #{&}__plusBtn
+            position: absolute
+            right: -35px
+            bottom: 30px
+    @at-root #{&}__avalibilityTable
+        width: 100%
+        margin-left: auto
+        margin-right: auto
+        @at-root #{&}__unitNumber
+            width: 30%
+        @at-root #{&}__available
+            width: 70%
+//unit_list Style starts

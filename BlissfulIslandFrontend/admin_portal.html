@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <link href="CSS/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.typekit.net/jyg2wba.css">
     <link rel="icon" type="image/png" href="CSS/Logo-s.png"/>
     <title>Admin Portal</title>
 </head>
 <body>
     <header id="navBar" class="navBar">
         <div class="navBar__logo">
-            <img src="" alt=""><!--Place holder for logo-->
+            <img id="logoM" class="navBar__img" src="CSS/Logo-M.png" alt="Logo">
             <img src="" alt=""><!--Place holder for handheld/small logo-->
         </div>
         <div id="navBarGroup" class="navBar__group">
@@ -67,12 +68,13 @@
     const navBarGroup = document.getElementById("navBarGroup");
     const navBar = document.getElementById("navBar");
 
-    const tenantList = document.getElementById("tenantList");
+    const adminPortal = document.getElementById("adminPortal");
     const managerList = document.getElementById("managerList");
     const tenantListTableHead = document.getElementById("tenantListTableHead");
     const managerListTableHead = document.getElementById("managerListTableHead");
     const tenantListTableBody = document.getElementById("tenantListTableBody");
     const managerListTableBody = document.getElementById("managerListTableBody");
+    const logoM = document.getElementById("logoM");
 
     const popUp = document.getElementById("popUp");
     const close = document.getElementById("close");
@@ -119,7 +121,7 @@
             <td>${tenant.accountID}</td>
             <td>${tenant.firstName} ${tenant.lastName}</td>
             <td><a id="Delete${tenant.accountID}" class="delete" onclick = deleteAccountPopUp(${tenant.accountID})>Delete</a></td>
-            <td><a id="makeManager${tenant.accountID}" class="makeManager" onclick = makeManagerPopUp(${tenant.accountID})>Make Manager</a>
+            <td><a id="Manager${tenant.accountID}" class="makeManager" onclick = makeManagerPopUp(${tenant.accountID})>Make Manager</a>
             </tr>`
         );
         managerListTable.map(manager => 
@@ -140,7 +142,7 @@
     function deleteAccountPopUp(id){
         popUp.style.display = "block";
         let popUpContentHeaderFill = `Are you sure you want to delete account ${id}?`;
-        let approveButton=`<button id='deleteAccount${id}' onclick = deleteAccount(${id})>Delete</button>`;
+        let approveButton=`<button id='deleteAccount' onclick = deleteAccount(${id})>Delete</button>`;
 
         popUpContentHeader.innerHTML = popUpContentHeaderFill;
         popUpSumit.innerHTML = approveButton;
@@ -148,7 +150,7 @@
     function makeManagerPopUp(id){
         popUp.style.display = "block";
         let popUpContentHeaderFill = `Are you sure you want to make account ${id} a Manager?`;
-        let approveButton=`<button id='makeManager${id}' onclick = makeManager(${id})>Make Manager</button>`;
+        let approveButton=`<button id='makeManager' onclick = makeManager(${id})>Make Manager</button>`;
 
         popUpContentHeader.innerHTML = popUpContentHeaderFill;
         popUpSumit.innerHTML = approveButton;

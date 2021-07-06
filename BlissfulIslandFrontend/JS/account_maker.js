@@ -4,6 +4,7 @@ const createTenantForm = document.getElementById('createTenantForm');
 const selectUnit = document.getElementById('selectUnit');
 const alert = document.getElementById('alertMessage');
 const logOutBtn = document.getElementById('logOut');
+const accountTypeField = document.getElementById('accountType-group')
 
 
 state = {}
@@ -87,6 +88,15 @@ function renderSelectUnitFormField(){
     `
     selectUnit.innerHTML = markup;
 }
+function fillAccountType(){
+    if(state.user.accountType == 2){
+        let fillAccountType = "<label for='accountType'>Account Type</label><input type='number' min='0' name='accountType' id='accountType' required>";
+        accountTypeField.innerHTML = fillAccountType;
+    }else{
+        let fillAccountType = "<label class='hidden' for='accountType'>Account Type</label><input type='number' value='0' min='0' name='accountType' class='hidden' id='accountType' required>";
+        accountTypeField.innerHTML = fillAccountType;
+    }
+}
 
 function toggleAlert(status, message){
     //update alert message
@@ -116,7 +126,7 @@ createTenantForm.addEventListener('submit', async (e) => {
 
     //disable submit button
     createAccountBtn.disabled = true;
-
+    
     //if fetch is not yet completed... do nothing
     if(!state || !state.units){
         return;
@@ -150,6 +160,8 @@ const onPageLoad = async function(){
 
     //get all units
     await getAllUnits();
+
+    fillAccountType();
 }
 
 /*run page visit startup function*/

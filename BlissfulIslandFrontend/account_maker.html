@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.typekit.net/jyg2wba.css">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="CSS/Logo-s.png"/>
@@ -12,7 +13,7 @@
     <!--NAV BAR-->
     <header id="navBar" class="navBar">
         <div class="navBar__logo">
-            <img src="" alt=""><!--Place holder for logo-->
+            <img id="logoM" class="navBar__img" src="CSS/Logo-M.png" alt="Logo">
             <img src="" alt=""><!--Place holder for handheld/small logo-->
         </div>
         <div id="navBarGroup" class="navBar__group">
@@ -43,9 +44,7 @@
             <label for="password">Password</label>
             <input type="password" name="password" id="password" required>
         </div>
-        <div class = "form-group"></div>
-            <label for="accountType">Account Type</label>
-            <input type="number" min="0" name="accountType" id="accountType" required>
+        <div id = "accountType-group" class = "form-group"></div>
         </div>
         <div class = "form-group" id="selectUnit">
         </div>
@@ -63,6 +62,7 @@
         const navBar = document.getElementById("navBar");
         const accountMaker = document.getElementById("accountMaker");
         const adminPortal = document.getElementById("adminPortal");
+        const logoM = document.getElementById("logoM");
     </script>
     <script src="./JS/account_maker.js"></script>
     <script src="./JS/index.js"></script>

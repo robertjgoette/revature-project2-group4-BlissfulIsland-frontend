@@ -1,9 +1,12 @@
 body {
   margin: 0;
+  font-family: lithos-pro, sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .navBar {
-  height: 70px;
+  height: 100px;
   background-color: #3BA4F0;
   color: white;
   position: -webkit-sticky;
@@ -13,8 +16,24 @@ body {
   transition: height 0.6s ease-out 0s;
 }
 
+.navBar__img {
+  padding-top: 5px;
+  padding-left: 5px;
+  height: 85px;
+  -webkit-transition: height 0.6s ease-out 0s;
+  transition: height 0.6s ease-out 0s;
+}
+
+.navBar__img--scroll {
+  padding-top: 5px;
+  padding-left: 5px;
+  height: 60px;
+  -webkit-transition: height 0.6s ease-out 0s;
+  transition: height 0.6s ease-out 0s;
+}
+
 .navBar--scroll {
-  height: 40px;
+  height: 70px;
   background-color: #3BA4F0;
   color: white;
   position: -webkit-sticky;
@@ -33,7 +52,7 @@ body {
       flex-wrap: wrap;
   position: absolute;
   right: 10px;
-  top: 35px;
+  top: 65px;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
@@ -50,7 +69,7 @@ body {
       flex-wrap: wrap;
   position: absolute;
   right: 10px;
-  top: 5px;
+  top: 35px;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
@@ -86,6 +105,14 @@ body {
   overflow: hidden;
   -webkit-transition: height 2s ease-out;
   transition: height 2s ease-out;
+}
+
+.tables--fill {
+  width: 100%;
+}
+
+.tables__unit_type {
+  width: 60%;
 }
 
 .tables__message {
@@ -273,6 +300,10 @@ body {
   cursor: pointer;
 }
 
+.plus--white {
+  background: white;
+}
+
 .plus::after {
   -webkit-transform: translateY(0px) rotate(90deg);
           transform: translateY(0px) rotate(90deg);
@@ -296,6 +327,10 @@ body {
   height: 2px;
   width: 100%;
   cursor: pointer;
+}
+
+.plus--white::after {
+  background: white;
 }
 
 .plus__btn {
@@ -388,6 +423,10 @@ body {
   display: none;
 }
 
+.hidden {
+  display: none;
+}
+
 #index {
   background: url("index_background.jpg") no-repeat fixed center;
   background-size: cover;
@@ -427,5 +466,76 @@ body {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.unitCard {
+  margin-top: 3rem;
+  width: 60%;
+  border: solid 1px black;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #59BAFF;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  position: relative;
+}
+
+.unitCard__pieChart {
+  width: 45%;
+}
+
+.unitCard__attribute {
+  margin-top: 3rem;
+  font-size: 1.55rem;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  color: white;
+}
+
+.unitCard__attribute ul {
+  -webkit-padding-start: 20px;
+          padding-inline-start: 20px;
+}
+
+.unitCard__attribute ul li {
+  list-style-type: none;
+  padding-top: 5px;
+}
+
+.unitCard__typeName {
+  color: white;
+  position: absolute;
+  right: 40px;
+}
+
+.unitCard__plusBox {
+  color: white;
+  position: absolute;
+  right: 40px;
+  bottom: 10px;
+}
+
+.unitCard__plusBox__plusBtn {
+  position: absolute;
+  right: -35px;
+  bottom: 30px;
+}
+
+.unitCard__avalibilityTable {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.unitCard__avalibilityTable__unitNumber {
+  width: 30%;
+}
+
+.unitCard__avalibilityTable__available {
+  width: 70%;
 }
 /*# sourceMappingURL=style.css.map */

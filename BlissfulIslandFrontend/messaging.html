@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <link href="CSS/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.typekit.net/jyg2wba.css">
     <link rel="icon" type="image/png" href="CSS/Logo-s.png"/>
     <title>Home Page</title>
 </head>
 <body>
     <header id="navBar" class="navBar">
         <div class="navBar__logo">
-            <img src="" alt=""><!--Place holder for logo-->
-            <img src="" alt=""><!--Place holder for handheld/small logo-->
+            <img id="logoM" class="navBar__img" src="CSS/Logo-M.png" alt="Logo">
+            <!-- <img id="logoS" class="hidden" src="CSS/Logo-s.png" alt=""> -->
         </div>
         <div id="navBarGroup" class="navBar__group">
             <div id="sendMessage"class = "navBar__group__links"><!--JS fill if account account on messaging--></div>
@@ -50,13 +51,32 @@
             <label for="messageBody">Message</label><br>
             <textarea class="messageBox" id="messageText" name="messageBody" maxlength = "200"></textarea><br>
             <div id ="issue"></div>
-            <div id="messageSumit"></div>
+            <div id="messageSubmit"></div>
         </div>
     </div>
 
 </body>
 
 <script>
+    let namesAreSet = false;
+
+    async function setNames(){
+        const response = await fetch("http://localhost:7000/accounts");
+        const responseJSON = await response.json();
+        for(let i = 0; i < responseJSON.length; i++){
+            element = responseJSON[i];
+            let name = element.firstName + " " + element.lastName;
+            nameCache.set(parseInt(element.accountID), name);
+        }
+        namesAreSet = true;
+    }
+
+    async function settingNames(){
+        await setNames();
+    }
+
+    settingNames();
+
     const accountType = localStorage.getItem("accountType");
     const accountId = localStorage.getItem("accountID"); 
     const accountMaker = document.getElementById("accountMaker");
@@ -73,13 +93,17 @@
     const oldMessages = document.getElementById("oldMessages");
     const recentMessagesHead = document.getElementById("recentMessagesHead");
     const oldMessagesHead = document.getElementById("oldMessagesHead");
+    const logoM = document.getElementById("logoM");
 
     const popUp = document.getElementById("popUp");
     const close = document.getElementById("close");
     const popUpContentHeader = document.getElementById("popUpContentHeader");
     const messageBody = document.getElementById("messageBody");
-    const messageSumit = document.getElementById("messageSumit");
+    const messageSubmit = document.getElementById("messageSubmit");
     const issue = document.getElementById("issue");
+
+    const nameCache = new Map();
+    
 
     // Start of run on load up
     if(accountType == 1){
@@ -118,13 +142,13 @@
         oldMessagesTableHead.innerHTML = messageTableHeadFill;
         recentMessageTableBody.innerHTML = recentMessageTableFill;
         oldMessagesTableBody.innerHTML = oldMessageTableFill;
+
+        names();
     }
 
     async function getAllMessageForTent(){
         let sendMessageButton = "<a id='sendMessageButton' onclick=popUpMessageTent()>Send Message</a>";
         sendMessage.innerHTML = sendMessageButton;
-        recentMessagesHead.innerHTML = "";
-        oldMessagesHead.innerHTML = "";
 
         const response = await fetch("http://18.117.185.229:7000/messages");
         let messageTable = await response.json();
@@ -142,6 +166,18 @@
         oldMessagesTableHead.innerHTML = messageTableHeadFill;
         recentMessageTableBody.innerHTML = recentMessageTableFill;
         oldMessagesTableBody.innerHTML = oldMessageTableFill;
+
+        names();
+    }
+
+    async function names(){
+        for(let x = 0; x < i; x++){
+            const name = document.getElementById(`name${x}`);
+            if(name !== null){
+                let id = name.innerHTML;
+                name.innerHTML = await getName(parseInt(id));
+            }
+        }
     }
 
     function messageSorting(message){
@@ -149,29 +185,34 @@
             if(i <= 2 ){ 
                 recentMessageTableFill += `<tr> 
                 <td>${unixToDate(message.timeSent)}</td>
-                <td>${message.senderID}</td>
+                <!-- <td>${message.senderID}</td> -->
+                <td id="name${i}">${message.senderID}</td>
                 <td>${message.messageBody}</td>
-                <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
+                <td><a id="respond${message.messageID}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
                 </tr>`
             } else{
                 oldMessageTableFill += `<tr> 
                 <td>${unixToDate(message.timeSent)}</td>
-                <td>${message.senderID}</td>
+                <!-- <td>${message.senderID}</td> -->
+                <td id="name${i}">${message.senderID}</td>
                 <td>${message.messageBody}</td>
-                <td><a id="respond${message.reimbursementId}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
+                <td><a id="respond${message.messageID}" class="respond" onclick = respondPopUp(${message.senderID})>Respond</a>
                 </tr>`
             }
-        }else if (message.senderID == accountId || message.receiverID == accountId){
+        }
+        else if (message.senderID == accountId || message.receiverID == accountId){
             if(i <= 2 ){ 
             recentMessageTableFill += `<tr> 
                 <td>${unixToDate(message.timeSent)}</td>
-                <td>${message.senderID}</td>
+                <!-- <td>${message.senderID}</td> -->
+                <td id="name${i}">${message.senderID}</td>
                 <td>${message.messageBody}</td>
                 </tr>`
             } else{
                 oldMessageTableFill += `<tr> 
                 <td>${unixToDate(message.timeSent)}</td>
-                <td>${message.senderID}</td>
+                <!-- <td>${message.senderID}</td> -->
+                <td id="name${i}">${message.senderID}</td>
                 <td>${message.messageBody}</td>
                 </tr>`
             }
@@ -180,7 +221,7 @@
     }
 
     function unixToDate(timestamp){
-        let fullTime = new Date(timestamp);
+        let fullTime = new Date(timestamp*1000);
         let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         let year = fullTime.getFullYear();
         let month = months[fullTime.getMonth()];
@@ -188,24 +229,31 @@
         let time = date + ' ' + month + ' ' + year;
         return time;
     }
+
+    async function getName(id){
+        if(namesAreSet === false){
+            await new Promise(r => setTimeout(r, 50));
+        }
+        return nameCache.get(id);
+    }
     // End of message fetching
 
     // Start of message popUp
     function popUpMessageTent(){
         popUp.style.display = "block";
         let popUpContentHeaderFill = `What seems to be the issue?`;
-        let approveButton=`<button id='messageSumit' onclick = sendMessageTent()>Send</button>`;
-        let issues = "<label for='typeOfIssue'>Issue</label><br><select name='typeOfIssue' id='typeOfIssue'><option value='null'>Choose Type</option><option value='0'>Question</option><option value='1'>Utility</option></select>"
+        let approveButton=`<button id='messageSubmit' class='tenantSubmitBtn' onclick = sendMessageTent()>Send</button>`;
+        let issues = "<label for='typeOfIssue'>Issue</label><br><select name='typeOfIssue' id='typeOfIssue'><option value='null' disabled selected>Choose Type</option><option value='0'>Question</option><option value='1'>Utility</option></select>"
         issue.innerHTML = issues;
         popUpContentHeader.innerHTML = popUpContentHeaderFill;
-        messageSumit.innerHTML = approveButton;
+        messageSubmit.innerHTML = approveButton;
     }
     function respondPopUp(id){
         popUp.style.display = "block";
         let popUpContentHeaderFill = `How would you like to respond?`;
-        let approveButton=`<button id='responseSumit' onclick = sendResponse(${id})>Send</button>`;
+        let approveButton=`<button id='responseSubmit' onclick = sendResponse(${id})>Send</button>`;
         popUpContentHeader.innerHTML = popUpContentHeaderFill;
-        messageSumit.innerHTML = approveButton;
+        messageSubmit.innerHTML = approveButton;
     }  
     function closePopUp(){
         messageText.value ="";
@@ -220,42 +268,52 @@
 
     //Start of message sending
     async function sendMessageTent(){
-        const message = {
-            "senderID":accountId,
-            "receiverID": 12,
-            "messageBody": messageText.value,
-            "timeSent": 0,
-            "messageType": typeOfIssue.value};
-            const typeOfMethod ={
-                method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body: JSON.stringify(message)
-            };
-            let url = `http://18.117.185.229:7000/messages`
-            const putReimbursement = await fetch(url, typeOfMethod);
-            getAllMessageForTent();
-            closePopUp();
+        const btn = document.querySelector(".tenantSubmitBtn");
+        btn.disabled = true;
+        if(typeOfIssue.value === "null"){
+            btn.disabled = false;
+            alert("Please select a type for your message")
+        }
+        else{
+            const message = {
+                "senderID":accountId,
+                "receiverID": 1,
+                "messageBody": messageText.value,
+                "timeSent": 0,
+                "messageType": typeOfIssue.value};
+                const typeOfMethod ={
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body: JSON.stringify(message)
+                };
+                messageText.value ="";
+                let url = `http://localhost:7000/messages`
+                const putReimbursement = await fetch(url, typeOfMethod);
+                getAllMessageForTent();
+                closePopUp();
+            }
     }
     async function sendResponse(id){
+        const btn = document.getElementById("responseSubmit");
+        btn.disabled = true;
         const message = {
             "senderID":accountId,
             "receiverID": id,
             "messageBody": messageText.value,
             "timeSent": 0,
             "messageType": 0};
-            const typeOfMethod ={
-                method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body: JSON.stringify(message)
-            };
-            let url = `http://18.117.185.229:7000/messages`
-            const putReimbursement = await fetch(url, typeOfMethod);
-            getAllMessage();
-            closePopUp();
+        const typeOfMethod ={
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify(message)
+        };
+        messageText.value ="";
+        let url = `http://localhost:7000/messages`
+        const putReimbursement = await fetch(url, typeOfMethod);
+        getAllMessage();
+        closePopUp();
     }
     // end of message sending
-    
-
 </script>
 <script src="JS/index.js"></script>
 </html>
