@@ -221,7 +221,7 @@
     }
 
     function unixToDate(timestamp){
-        let fullTime = new Date(timestamp);
+        let fullTime = new Date(timestamp*1000);
         let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         let year = fullTime.getFullYear();
         let month = months[fullTime.getMonth()];
@@ -314,9 +314,6 @@
         closePopUp();
     }
     // end of message sending
-    
-    /*Application state and redirects*/
-
 </script>
 <script src="JS/index.js"></script>
 </html>
